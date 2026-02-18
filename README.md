@@ -60,6 +60,7 @@ claude-legacy-reveng-plugin/
 |-------|-------------|
 | `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
 | `sanitise-transcript` | Removes off-topic content from interview transcripts |
+| `extract-workflows` | Extracts user workflows from a sanitised transcript, cross-referencing HTML screens to produce documented workflows with mermaid diagrams |
 
 ## Status
 
