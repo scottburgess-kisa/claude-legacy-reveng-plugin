@@ -54,6 +54,13 @@ claude-legacy-reveng-plugin/
 └── README.md
 ```
 
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
+| `sanitise-transcript` | Removes off-topic content from interview transcripts |
+
 ## Status
 
 Early development.
