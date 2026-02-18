@@ -1,0 +1,11 @@
+{
+  "name": "defra-legacy-reveng",
+  "version": "0.0.1",
+  "description": "Claude Code plugin for Defra's Legacy Application Programme (LAP) to aid in reverse engineering legacy applications.",
+  "author": {
+    "name": "Defra LAP"
+  },
+  "repository": "https://github.com/DEFRA/claude-legacy-reveng-plugin",
+  "license": "OGL-UK-3.0",
+  "keywords": ["defra", "legacy", "reverse-engineering", "modernisation", "lap"]
+}
