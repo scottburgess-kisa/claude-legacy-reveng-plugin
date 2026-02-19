@@ -1,12 +1,12 @@
 ---
 name: sanitise-transcript
-description: Sanitises a stakeholder interview transcript by removing off-topic content (incumbent team agenda, feature requests, distractions) while preserving application walkthrough and domain knowledge verbatim. Produces a redacted material file for traceability.
+description: Sanitises a stakeholder interview transcript by removing off-topic content (incumbent team agenda, feature requests, distractions) while preserving application walkthrough and domain knowledge verbatim.
 user-invocable: true
 allowed-tools: Read, Write, Bash(mkdir*)
 argument-hint: [transcript-path]
 ---
 
-You are sanitising a Defra LAP stakeholder interview transcript. Your job is to remove off-topic material while preserving application walkthrough content and domain knowledge **word-for-word**. You must also capture all removed material in a separate redacted file for traceability.
+You are sanitising a Defra LAP stakeholder interview transcript. Your job is to remove off-topic material while preserving application walkthrough content and domain knowledge **word-for-word**.
 
 ## Input
 
@@ -23,7 +23,7 @@ The transcript file path is: `$ARGUMENTS`
    - Domain knowledge: business rules, terminology, processes, regulations, organisational context
    - Any context that helps understand what the application does and why it exists
 
-   **Remove** — cut these passages from the sanitised transcript but capture them in the redacted material file:
+   **Remove** — silently cut these passages:
    - The incumbent modernisation team's agenda, plans, opinions, or approach discussions
    - Stakeholder feature requests or wishlists for new functionality
    - Tangential conversation not related to the current application or its domain
@@ -31,33 +31,19 @@ The transcript file path is: `$ARGUMENTS`
 
 3. **Produce the sanitised transcript** following these rules strictly:
    - Retain kept text **word-for-word** — do not paraphrase, summarise, or rewrite any kept content
-   - Where a passage has been removed, insert a `[REDACTED]` marker in its place. The marker must be preceded and followed by a blank line
+   - Silently remove off-topic passages — do not insert markers, comments, or placeholders where content was removed
    - Preserve the original markdown formatting, heading structure, speaker labels, and document layout
+   - If removing a passage leaves adjacent blank lines, collapse them to a single blank line
 
-4. **Produce the redacted material file** following these rules:
-   - List each removed passage **in the order it appeared** in the original transcript
-   - Preserve the original text of each passage word-for-word
-   - Annotate each passage with the reason for removal using a bold label before the passage text, e.g.:
-     - **Reason: Incumbent team agenda**
-     - **Reason: Feature request**
-     - **Reason: Tangential conversation**
-     - **Reason: Interview meta-discussion**
-   - Separate each entry with a horizontal rule (`---`)
-   - If nothing was removed, do not create the redacted material file
+4. **Derive the output path** by inserting `sanitised/` after `transcripts/` in the input path. For example:
+   - `transcripts/interview-1.md` → `transcripts/sanitised/interview-1.md`
+   - `transcripts/sub/deep-dive.md` → `transcripts/sanitised/sub/deep-dive.md`
 
-5. **Derive the output paths:**
-   - **Sanitised transcript:** insert `sanitised/` after `transcripts/` in the input path. For example:
-     - `transcripts/interview-1.md` → `transcripts/sanitised/interview-1.md`
-     - `transcripts/sub/deep-dive.md` → `transcripts/sanitised/sub/deep-dive.md`
-   - **Redacted material:** insert `redacted/` after `transcripts/` in the input path. For example:
-     - `transcripts/interview-1.md` → `transcripts/redacted/interview-1.md`
-     - `transcripts/sub/deep-dive.md` → `transcripts/redacted/sub/deep-dive.md`
+5. **Ensure the output directory exists** by running `mkdir -p` on the parent directory of the output path.
 
-6. **Ensure the output directories exist** by running `mkdir -p` on the parent directories of both output paths.
+6. **Write the sanitised file** to the derived output path using the Write tool.
 
-7. **Write both files** using the Write tool.
-
-8. **Return a confirmation message** containing:
-   - Both output file paths
+7. **Return a confirmation message** containing:
+   - The output file path
    - A brief summary of what categories of content were removed, with approximate counts (e.g. "Removed: 3 passages discussing the incumbent team's migration timeline, 2 feature requests for a new reporting dashboard")
-   - If nothing was removed, state that the transcript contained no off-topic material and that no redacted material file was created
+   - If nothing was removed, state that the transcript contained no off-topic material
