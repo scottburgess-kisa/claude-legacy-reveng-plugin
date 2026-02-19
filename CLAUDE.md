@@ -12,3 +12,4 @@ Defra maintains a large estate of legacy applications built across decades using
 - Refer to the programme as "LAP" or "Legacy Application Programme"
 - Treat all legacy code as potentially undocumented — never assume documentation exists
 - When creating a new skill, add an entry to the Skills table in README.md
+- When creating a new agent, add an entry to the Agents table in README.md
