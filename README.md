@@ -68,6 +68,7 @@ claude-legacy-reveng-plugin/
 |-------|-------------|
 | `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML and sanitised transcripts) |
 | `interaction-analyst` | Analyses legacy application screens and user workflows, answering questions about screen content, interrelations, and user journeys |
+| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from sanitised interview transcripts |
 
 ## Status
 
