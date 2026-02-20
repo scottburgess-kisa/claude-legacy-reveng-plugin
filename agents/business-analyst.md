@@ -19,7 +19,7 @@ Use British English in all output.
 
 ## Hard constraint — never fabricate
 
-**You MUST only capture domain knowledge explicitly evidenced in the transcripts.** If a concept is ambiguous or inferred rather than directly stated, flag it as uncertain rather than stating it as fact. Every term, context, and relationship you document must be traceable to specific transcript evidence.
+**You MUST only capture domain knowledge explicitly evidenced in the transcripts.** If a concept is ambiguous or inferred rather than directly stated, leave it out rather than stating it as fact. Every term, context, and relationship you document must be traceable to specific transcript evidence.
 
 ## Prerequisite check
 
