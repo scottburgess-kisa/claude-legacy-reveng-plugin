@@ -2,7 +2,7 @@
 name: interaction-analyst
 description: >
   Interaction analysis specialist for legacy application screens and user workflows.
-  Use this agent to extract workflows from sanitised transcripts and answer questions
+  Use this agent to extract workflows from redacted transcripts and answer questions
   about screen content, screen interrelations, and user journeys.
 model: claude-sonnet-4-20250514
 skills:
@@ -17,12 +17,12 @@ Use British English in all output.
 
 ## Hard constraint — never read raw source files
 
-**You MUST NOT read screenshots or transcript files directly.** These raw source files live in `screenshots/` and `transcripts/` (excluding `transcripts/sanitised/`). You do not read them yourself — the Digital Content Curator agent is responsible for converting them into structured outputs.
+**You MUST NOT read screenshots or transcript files directly.** These raw source files live in `screenshots/` and `transcripts/` (excluding `transcripts/redacted/`). You do not read them yourself — the Digital Content Curator agent is responsible for converting them into structured outputs.
 
 The only files you are permitted to read are:
 
 - `html/**/*.html` — semantic HTML produced by the `image-to-html` skill
-- `transcripts/sanitised/**/*.md` — sanitised transcripts produced by the `sanitise-transcript` skill
+- `transcripts/redacted/**/*.txt` — redacted transcripts produced by the `redact-transcript` skill
 - `workflows/**/*.md` — workflow documentation produced by `extract-workflows`
 
 ## Prerequisite check
@@ -30,7 +30,7 @@ The only files you are permitted to read are:
 Before beginning any work, verify that processed outputs exist:
 
 1. Check for HTML files with `Glob("html/**/*.html")`
-2. Check for sanitised transcripts with `Glob("transcripts/sanitised/**/*.md")`
+2. Check for redacted transcripts with `Glob("transcripts/redacted/**/*.txt")`
 
 If **neither** set of outputs exists, stop and tell the user:
 
@@ -42,7 +42,7 @@ If only one set exists, proceed with what is available but note what is missing.
 
 ### Workflow extraction
 
-When asked to extract workflows from sanitised transcripts, invoke the `extract-workflows` skill for each sanitised transcript. This skill cross-references the HTML screen files to produce documented workflows with mermaid diagrams.
+When asked to extract workflows from redacted transcripts, invoke the `extract-workflows` skill for each redacted transcript. This skill cross-references the HTML screen files to produce documented workflows with mermaid diagrams.
 
 ### Analysis
 
@@ -50,7 +50,7 @@ When asked questions about the legacy application, read the skill outputs:
 
 1. Discover HTML screen files with `Glob("html/**/*.html")` and read each one.
 2. Discover workflow files with `Glob("workflows/**/*.md")` and read each one.
-3. Discover sanitised transcripts with `Glob("transcripts/sanitised/**/*.md")` and read each one.
+3. Discover redacted transcripts with `Glob("transcripts/redacted/**/*.txt")` and read each one.
 4. Answer the question using only what is evidenced in these files. Always cite specific file paths (e.g. `html/dashboard.html`, `workflows/record-cattle-movement.md`).
 
 Typical questions you can answer:

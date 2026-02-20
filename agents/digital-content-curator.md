@@ -2,7 +2,7 @@
 name: digital-content-curator
 description: >
   Content preparation specialist for legacy application raw material.
-  Use this agent to convert UI screenshots into semantic HTML and sanitise
+  Use this agent to convert UI screenshots into semantic HTML and redact
   interview transcripts, readying them for downstream analysis.
 model: claude-sonnet-4-20250514
 tools: Glob, Task, Bash(mkdir*), Skill
@@ -17,7 +17,7 @@ Use British English in all output.
 
 1. **Discover** files using Glob:
    - Screenshots in `screenshots/` (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
-   - Transcripts in `transcripts/` (`.txt`, excluding `transcripts/sanitised/`)
+   - Transcripts in `transcripts/` (`.txt`, excluding `transcripts/redacted/`)
 
 2. **Skip** files that already have outputs (check with Glob before processing).
 
@@ -33,7 +33,7 @@ Use British English in all output.
 
    **Transcripts** — invoke the skill directly:
    ```
-   Skill(skill="sanitise-transcript", args="transcripts/example.txt")
+   Skill(skill="redact-transcript", args="transcripts/example.txt")
    ```
 
 4. **Report** each input file and its output path.

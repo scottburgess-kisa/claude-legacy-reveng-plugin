@@ -59,16 +59,16 @@ claude-legacy-reveng-plugin/
 | Skill | Description |
 |-------|-------------|
 | `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
-| `sanitise-transcript` | Removes off-topic content from interview transcripts |
-| `extract-workflows` | Extracts user workflows from a sanitised transcript, cross-referencing HTML screens to produce documented workflows with mermaid diagrams |
+| `redact-transcript` | Removes off-topic content from interview transcripts |
+| `extract-workflows` | Extracts user workflows from a redacted transcript, cross-referencing HTML screens to produce documented workflows with mermaid diagrams |
 
 ## Agents
 
 | Agent | Description |
 |-------|-------------|
-| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML and sanitised transcripts) |
+| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML and redacted transcripts) |
 | `interaction-analyst` | Analyses legacy application screens and user workflows, answering questions about screen content, interrelations, and user journeys |
-| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from sanitised interview transcripts |
+| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts |
 
 ## Status
 

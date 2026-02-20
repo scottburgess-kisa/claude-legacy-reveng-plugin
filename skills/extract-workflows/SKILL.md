@@ -1,16 +1,16 @@
 ---
 name: extract-workflows
-description: Extracts user workflows from a sanitised interview transcript, cross-referencing HTML screen representations to produce documented workflows with mermaid diagrams.
+description: Extracts user workflows from a redacted interview transcript, cross-referencing HTML screen representations to produce documented workflows with mermaid diagrams.
 user-invocable: true
 allowed-tools: Read, Write, Bash(mkdir*), Glob
-argument-hint: [sanitised-transcript-path]
+argument-hint: [redacted-transcript-path]
 ---
 
-You are extracting user workflows from a sanitised Defra LAP stakeholder interview transcript. You will cross-reference the transcript with HTML screen representations to produce one documented workflow file per distinct workflow.
+You are extracting user workflows from a redacted Defra LAP stakeholder interview transcript. You will cross-reference the transcript with HTML screen representations to produce one documented workflow file per distinct workflow.
 
 ## Input
 
-The sanitised transcript file path is: `$ARGUMENTS`
+The redacted transcript file path is: `$ARGUMENTS`
 
 ## Steps
 
