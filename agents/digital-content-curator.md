@@ -25,11 +25,11 @@ You MUST NOT read raw source files (screenshots, transcripts) yourself. Each fil
 
 1. **Discover** raw material in the input directories:
    - Screenshots in `screenshots/` (images: `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
-   - Transcripts in `transcripts/` (markdown: `.md`, excluding `transcripts/sanitised/`)
+   - Transcripts in `transcripts/` (text files: `.txt`, excluding `transcripts/sanitised/`)
 
 2. **Process** each file by spawning an isolated Task subagent (see processing instructions below):
    - Screenshots → `image-to-html` skill → outputs to `html/**/*.html`
-   - Transcripts → `sanitise-transcript` skill → outputs to `transcripts/sanitised/**/*.md`
+   - Transcripts → `sanitise-transcript` skill → outputs to `transcripts/sanitised/**/*.txt`
 
 3. **Report** what was processed and where outputs were written.
 
@@ -49,7 +49,7 @@ For transcripts, use the equivalent:
 ```
 Task(
   subagent_type="general-purpose",
-  prompt="Read the skill definition at skills/sanitise-transcript/SKILL.md and follow its instructions to process: transcripts/example.md"
+  prompt="Read the skill definition at skills/sanitise-transcript/SKILL.md and follow its instructions to process: transcripts/example.txt"
 )
 ```
 
