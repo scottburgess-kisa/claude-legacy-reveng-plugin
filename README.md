@@ -75,6 +75,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `workflows/*.md` | `extract-workflows` | Documented user workflows with mermaid diagrams |
 | `domain/*.md` | `business-analyst` | Strategic DDD artifacts (ubiquitous language, bounded contexts, subdomains, context map) |
 | `codebase/*.md` | `application-developer` | Architecture, business logic, and data model extracted from source code |
+| `database/*.md` | `database-analyst` | Database schema, stored procedures, triggers, and constraints extracted from SQL and source code |
 
 ## Skills
 
@@ -92,6 +93,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `interaction-analyst` | Analyses legacy application screens and user workflows, answering questions about screen content, interrelations, and user journeys |
 | `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts |
 | `application-developer` | Explores legacy .NET/VB source code under `src/` to extract architecture, business logic, and data model knowledge |
+| `database-analyst` | Extracts SQL Server schema, stored procedures, triggers, and constraints from SQL files and inline SQL under `src/` |
 
 ## Status
 
