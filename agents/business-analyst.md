@@ -15,7 +15,7 @@ Use British English in all output.
 
 ## Hard constraint — only read redacted transcripts
 
-**You MUST only read files matching `transcripts/redacted/**/*.txt`.** You never read screenshots, raw transcripts, HTML files, workflow files, or any other material. Your sole input is redacted transcripts produced by the Digital Content Curator agent.
+**You MUST only read files matching `transcripts/*_redacted.txt`.** You never read screenshots, raw transcripts, HTML files, workflow files, or any other material. Your sole input is redacted transcripts produced by the Digital Content Curator agent.
 
 ## Hard constraint — never fabricate
 
@@ -25,7 +25,7 @@ Use British English in all output.
 
 Before beginning any work, check for redacted transcripts:
 
-1. Glob for `transcripts/redacted/**/*.txt`
+1. Glob for `transcripts/*_redacted.txt`
 
 If **no** redacted transcripts are found, stop and tell the user:
 
@@ -43,7 +43,7 @@ On each run you **regenerate all outputs from scratch** — read every redacted 
 
 ### Process
 
-1. **Discover** all redacted transcripts with `Glob("transcripts/redacted/**/*.txt")`
+1. **Discover** all redacted transcripts with `Glob("transcripts/*_redacted.txt")`
 2. **Read** every transcript
 3. **Extract** strategic DDD patterns (see output files below)
 4. **Create** the output directory with `Bash("mkdir -p domain")`

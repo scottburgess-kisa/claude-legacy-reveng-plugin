@@ -17,7 +17,7 @@ Use British English in all output.
 
 1. **Discover** files using Glob:
    - Screenshots in `screenshots/` (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
-   - Transcripts in `transcripts/` (`.txt`, excluding `transcripts/redacted/`)
+   - Transcripts in `transcripts/` (`.txt`, excluding `*_redacted.txt`)
 
 2. **Skip** files that already have outputs (check with Glob before processing).
 
