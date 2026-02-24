@@ -40,7 +40,7 @@ Work through these steps in order:
 
 Use Glob to check what raw material and source code exists:
 - Glob for `screenshots/` files (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
-- Glob for raw transcripts: `transcripts/*.txt` (excluding `*_curated.txt` and `*_redacted.txt`)
+- Glob for raw transcripts: `transcripts/*.txt` (excluding `*_curated.txt`)
 - Glob for `src/`
 
 Launch agents based on what exists:
@@ -56,7 +56,7 @@ Attempt to Read `domain/domain-analysis.md` and `workflows/interaction-analysis.
 - `domain/domain-analysis.md` → `business-analyst`
 - `workflows/interaction-analysis.md` → `interaction-analyst`
 
-These agents depend on curator output (redacted transcripts and HTML files), which is why they run after the curator completes. Run both in parallel if both are missing.
+These agents depend on curator output (curated transcripts and HTML files), which is why they run after the curator completes. Run both in parallel if both are missing.
 
 ### Step 3: Collect analysis files
 

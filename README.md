@@ -72,9 +72,8 @@ Place your raw material in the host project (the project you run the plugin from
 |------|------------|-------------|
 | `html/*.html` | `image-to-html` | Semantic HTML representation of each screenshot |
 | `transcripts/*_curated.txt` | `curate-transcript` | Interview transcripts with off-topic content removed (intermediate) |
-| `transcripts/*_redacted.txt` | `redact-pii` | Curated transcripts with PII replaced by realistic fakes |
-| `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from redacted transcripts and HTML screens |
-| `workflows/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and redacted transcripts |
+| `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from curated transcripts and HTML screens |
+| `workflows/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and curated transcripts |
 | `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules, reports) extracted from source code |
 | `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
 | `PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
@@ -93,7 +92,6 @@ Generated outputs are regeneratable artefacts. Recommended version control appro
 # Plugin intermediate outputs
 html/
 transcripts/*_curated.txt
-transcripts/*_redacted.txt
 ```
 
 ## Skills
@@ -102,15 +100,14 @@ transcripts/*_redacted.txt
 |-------|-------------|
 | `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
 | `curate-transcript` | Removes off-topic content from interview transcripts |
-| `redact-pii` | Replaces PII in curated transcripts with realistic fake equivalents |
 
 ## Agents
 
 | Agent | Description |
 |-------|-------------|
-| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML, curated transcripts, PII-redacted transcripts) |
-| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted transcripts and HTML screens for PRD generation |
-| `interaction-analyst` | Stitches HTML screen representations with redacted interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
+| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML, curated transcripts) |
+| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from curated transcripts and HTML screens for PRD generation |
+| `interaction-analyst` | Stitches HTML screen representations with curated interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
 | `application-developer` | Comprehensively reads legacy .NET source code under `src/` to extract workflows, behaviours, domain model, business rules, and reports for PRD generation |
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
 | `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning |
@@ -131,10 +128,9 @@ flowchart TB
 
     curator -->|per screenshot| i2h{{image-to-html}}
     curator -->|per transcript| ct{{curate-transcript}}
-    ct --> rp{{redact-pii}}
 
     i2h --> html(["html/*.html"])
-    rp --> redacted(["*_redacted.txt"])
+    ct --> curated(["*_curated.txt"])
 
     appdev[application-developer]
     dbanalyst[database-analyst]
@@ -142,7 +138,7 @@ flowchart TB
 
     ba[business-analyst]
     ia[interaction-analyst]
-    html & redacted --> ba & ia
+    html & curated --> ba & ia
 
     ba --> domain(["domain-analysis.md"])
     ia --> workflows(["interaction-analysis.md"])
@@ -156,7 +152,7 @@ flowchart TB
 
 | Stage | Components | Runs in parallel with |
 |-------|------------|-----------------------|
-| 1a — Content preparation | `digital-content-curator` invokes `image-to-html`, `curate-transcript`, then `redact-pii` | Stage 1b |
+| 1a — Content preparation | `digital-content-curator` invokes `image-to-html` and `curate-transcript` | Stage 1b |
 | 1b — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 1a |
 | 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Each other; depends on Stage 1a |
 | 3 — Synthesis | `product-manager` reads all four analyses and writes `PRD.md` | None; depends on Stages 1b and 2 |
