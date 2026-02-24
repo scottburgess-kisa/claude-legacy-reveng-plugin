@@ -76,7 +76,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from redacted interview transcripts |
 | `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules) extracted from source code |
 | `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
-| `docs/PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
+| `PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
 
 ## Skills
 
