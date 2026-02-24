@@ -24,16 +24,23 @@ The transcript file path is: `$ARGUMENTS`
 
 5. **Identify passages to remove.** Classify content into two categories:
 
-   **Keep** — do not touch:
+   **Keep** — content directly about the application or its domain:
    - Application walkthrough content: screen descriptions, user flows, functionality explanations, how the system behaves
-   - Domain knowledge: business rules, terminology, processes, regulations, organisational context
-   - Any context that helps understand what the application does and why it exists
+   - Domain knowledge: business rules, terminology, processes, regulations that the application implements
+   - Technical details about the application: architecture, integrations, data flows, infrastructure it runs on
 
-   **Remove** — these passages must be cut:
+   **Remove** — everything else, including but not limited to:
    - The incumbent modernisation team's agenda, plans, opinions, or approach discussions
    - Stakeholder feature requests or wishlists for new functionality
+   - Project management discussions: team structure, suppliers, contracts, timelines, staffing, resourcing, delivery plans
+   - Meeting logistics and scheduling: arranging follow-ups, calendar availability, session housekeeping
+   - Personal context about individuals: career history, background, role introductions beyond job title
+   - Technical tangents unrelated to the application itself: DPIA processes, data protection policy, procurement procedures, programme governance
+   - Social pleasantries, small talk, greetings, sign-offs, thanks, and chitchat
+   - Meta-discussion about the interview process itself
    - Tangential conversation not related to the current application or its domain
-   - Meta-discussion about the interview process itself (scheduling, logistics, introductions unrelated to the application)
+
+   **Bias toward removal.** If a passage is borderline — it mentions the application but is primarily about something else (e.g. staffing a team to support it, or procurement of a replacement) — remove it. The curated transcript should contain only content that helps an engineer understand what the application does today.
 
 6. **Remove each identified passage** using the Edit tool on the output file. For each passage:
    - Set `old_string` to the **exact text** of the passage to remove (copy it precisely, including whitespace and line breaks)
