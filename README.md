@@ -73,7 +73,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `html/*.html` | `image-to-html` | Semantic HTML representation of each screenshot |
 | `transcripts/*_redacted.txt` | `redact-transcript` | Interview transcripts with off-topic content removed |
 | `workflows/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and redacted transcripts |
-| `domain/*.md` | `business-analyst` | Strategic DDD artifacts (ubiquitous language, bounded contexts, subdomains, context map) |
+| `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from redacted interview transcripts |
 | `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules) extracted from source code |
 | `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
 
@@ -90,7 +90,7 @@ Place your raw material in the host project (the project you run the plugin from
 |-------|-------------|
 | `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML and redacted transcripts) |
 | `interaction-analyst` | Stitches HTML screen representations with redacted interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
-| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts |
+| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts for PRD generation |
 | `application-developer` | Comprehensively reads legacy .NET/VB source code under `src/` to extract workflows, behaviours, domain model, and business rules for PRD generation |
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
 
