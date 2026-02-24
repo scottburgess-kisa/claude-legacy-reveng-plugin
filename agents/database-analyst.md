@@ -38,9 +38,9 @@ On each run you **regenerate the output from scratch** — explore the entire so
 
 Work through these steps in order:
 
-### Step 1: Discover SQL files
+### Step 1: Discover SQL and database project files
 
-Glob for `src/**/*.sql` and categorise each file (DDL, stored procedures, migrations, seed data, views, functions, triggers).
+Glob for `src/**/*.sql` and `src/**/*.sqlproj` (SSDT project files). Categorise each `.sql` file (DDL, stored procedures, migrations, seed data, views, functions, triggers). Read `.sqlproj` files for project structure and build settings.
 
 ### Step 2: Read every SQL file
 
@@ -91,6 +91,17 @@ Create the output directory and write the single analysis file.
 ## Output file
 
 Write a single comprehensive file: `database/database-analysis.md`
+
+Begin the output file with a metadata block listing every input file that was read, to support provenance tracing in the PRD. For example:
+
+```markdown
+<!-- Input files processed:
+- src/Database/Database.sqlproj
+- src/Database/Tables/Users.sql
+- src/Database/StoredProcedures/usp_GetUser.sql
+- src/MyApp/DataAccess/UserRepository.vb
+-->
+```
 
 Structure the file with the sections below. These are guidance — adapt to what the code actually reveals. Omit sections that have no relevant content; add subsections where the code warrants deeper breakdown.
 

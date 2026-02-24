@@ -85,6 +85,17 @@ Create the output directory and write the single analysis file.
 
 Write a single comprehensive file: `workflows/interaction-analysis.md`
 
+Begin the output file with a metadata block listing every input file that was read, to support provenance tracing in the PRD. For example:
+
+```markdown
+<!-- Input files processed:
+- html/dashboard.html
+- html/record-movement.html
+- transcripts/user-interview_redacted.txt
+- transcripts/admin-walkthrough_redacted.txt
+-->
+```
+
 Structure the file with the sections below. These are guidance — adapt to what the material actually reveals. Omit sections that have no relevant content; add subsections where the material warrants deeper breakdown.
 
 ### 1. Screen Inventory

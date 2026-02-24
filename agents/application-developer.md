@@ -66,6 +66,14 @@ Glob for all source files:
 - `src/**/*.aspx`
 - `src/**/*.ascx`
 - `src/**/*.asmx`
+- `src/**/*.cshtml` (Razor views)
+- `src/**/*.vbhtml` (VB Razor views)
+- `src/**/*.Master` (ASP.NET master pages)
+- `src/**/*.resx` (resource files — extract user-facing strings)
+- `src/**/*.json` (modern .NET config)
+- `src/**/*.yaml` / `src/**/*.yml` (modern .NET config)
+- `src/**/*.rpt` (Crystal Reports)
+- `src/**/*.rdl` / `src/**/*.rdlc` (SSRS reports)
 
 **Skip** `*.designer.vb` and `*.designer.cs` — these are auto-generated and not useful for understanding application behaviour.
 
@@ -80,6 +88,18 @@ Create the output directory and write the single analysis file.
 ## Output file
 
 Write a single comprehensive file: `codebase/application-analysis.md`
+
+Begin the output file with a metadata block listing every input file that was read, to support provenance tracing in the PRD. For example:
+
+```markdown
+<!-- Input files processed:
+- src/MyApp.sln
+- src/MyApp/MyApp.vbproj
+- src/MyApp/Web.config
+- src/MyApp/Default.aspx
+- src/MyApp/Default.aspx.vb
+-->
+```
 
 Structure the file with the sections below. These are guidance — adapt to what the code actually reveals. Omit sections that have no relevant content; add subsections where the code warrants deeper breakdown.
 
@@ -135,6 +155,18 @@ Structure the file with the sections below. These are guidance — adapt to what
 - File I/O (imports, exports, report generation)
 - Email and notification sending
 - External system dependencies
+
+### 8. Reports
+
+- Crystal Reports (`.rpt` files): name, purpose, data sources, parameters
+- SSRS reports (`.rdl`/`.rdlc` files): name, purpose, data sources, parameters
+- Code-generated reports: report generation logic, output format, triggers
+
+### 9. Cross-Reference: Application to Database
+
+- Data access patterns — how the application reads/writes data (ADO.NET, Entity Framework, typed datasets)
+- Entity-to-table mapping where inferable from code
+- Stored procedure calls — which application files call which procedures
 
 **Do not include:** SQL queries, stored procedure internals, database schema, or data access implementation details — these are the responsibility of the database-analyst agent.
 
