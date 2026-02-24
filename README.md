@@ -75,7 +75,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `workflows/*.md` | `extract-workflows` | Documented user workflows with mermaid diagrams |
 | `domain/*.md` | `business-analyst` | Strategic DDD artifacts (ubiquitous language, bounded contexts, subdomains, context map) |
 | `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules) extracted from source code |
-| `database/*.md` | `database-analyst` | Database schema, stored procedures, triggers, and constraints extracted from SQL and source code |
+| `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
 
 ## Skills
 
@@ -93,7 +93,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `interaction-analyst` | Analyses legacy application screens and user workflows, answering questions about screen content, interrelations, and user journeys |
 | `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts |
 | `application-developer` | Comprehensively reads legacy .NET/VB source code under `src/` to extract workflows, behaviours, domain model, and business rules for PRD generation |
-| `database-analyst` | Extracts SQL Server schema, stored procedures, triggers, and constraints from SQL files and inline SQL under `src/` |
+| `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
 
 ## Status
 
