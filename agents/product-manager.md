@@ -28,55 +28,64 @@ Use British English in all output.
 
 **Document what is explicitly present in the analysis files.** Do not invent, assume, or infer beyond what the analysts reported. If the analyses do not contain enough information, note the gap in Open Questions rather than speculating.
 
-## Prerequisite check
-
-### Step 1: Prepare raw material
-
-Launch the `digital-content-curator` agent via the Task tool. This agent prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML and redacted transcripts). If it fails because no raw material exists, **stop immediately** and tell the user what is missing.
-
-### Step 2: Run missing analyst agents
-
-Attempt to Read all four analysis file paths. For each missing file, launch the corresponding agent using the Task tool:
-
-| Missing file | Agent to run |
-|---|---|
-| `domain/domain-analysis.md` | `business-analyst` |
-| `workflows/interaction-analysis.md` | `interaction-analyst` |
-| `codebase/application-analysis.md` | `application-developer` |
-| `database/database-analysis.md` | `database-analyst` |
-
-Run missing agents in parallel where possible. If an agent fails because its own source material is missing (e.g. no redacted transcripts, no source code), **stop immediately** and tell the user what is missing. Do not produce any output files.
-
 ## What you do
 
 On each run you **regenerate the PRD from scratch** — read every available analysis file and produce the PRD fresh. This ensures the output always reflects the complete, current set of analyses.
 
-## Exploration strategy
+## Execution sequence
 
 Work through these steps in order:
 
-### Step 1: Ensure all analysis files exist
+### Step 1: Check for raw material and launch preparation in parallel with code analysts
 
-Attempt to Read all four paths. For any that are missing, launch the corresponding agent via the Task tool. Run missing agents in parallel where possible.
+Use Glob to check what raw material and source code exists:
+- Glob for `screenshots/` files (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
+- Glob for raw transcripts: `transcripts/*.txt` (excluding `*_curated.txt` and `*_redacted.txt`)
+- Glob for `src/`
+
+Launch agents based on what exists:
+- If raw screenshots or transcripts exist, launch `digital-content-curator` via Task
+- If `src/` exists, launch `application-developer` and `database-analyst` via Task in parallel (these have no curator dependency)
+
+Wait for the curator to complete (if launched) before proceeding to Step 2.
+
+### Step 2: Launch remaining analysts
+
+Attempt to Read `domain/domain-analysis.md` and `workflows/interaction-analysis.md`. For each missing file, launch the corresponding agent via Task:
 
 - `domain/domain-analysis.md` → `business-analyst`
 - `workflows/interaction-analysis.md` → `interaction-analyst`
-- `codebase/application-analysis.md` → `application-developer`
-- `database/database-analysis.md` → `database-analyst`
 
-If any agent fails due to missing source material, stop and report to the user.
+These agents depend on curator output (redacted transcripts and HTML files), which is why they run after the curator completes. Run both in parallel if both are missing.
 
-### Step 2: Read every analysis file
+### Step 3: Collect analysis files
 
-Read all four files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints.
+Attempt to Read all four analysis files:
 
-### Step 3: Identify cross-cutting concerns
+- `domain/domain-analysis.md`
+- `workflows/interaction-analysis.md`
+- `codebase/application-analysis.md`
+- `database/database-analysis.md`
 
-Note where multiple analyses describe the same concepts (domain terms, workflows, entities, business rules) and reconcile them into a unified view.
+If **at least one** analysis file exists, proceed to synthesis. If **none** exist, stop and report to the user what is missing.
 
-### Step 4: Write output
+### Step 4: Validate analysis quality
 
-Write the PRD.
+For each analysis file that exists, check that it:
+- Contains expected top-level markdown headings
+- Has non-trivial content (more than 20 lines)
+
+If any file appears truncated or malformed, log a warning in the PRD's Open Questions section but proceed with what is available.
+
+### Step 5: Read, cross-reference, and write PRD
+
+Read all available analysis files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints. Reconcile where multiple analyses describe the same concepts into a unified view. Then write the PRD.
+
+### Partial success
+
+If some analysts fail but others succeed, **produce the PRD with the available analyses**. Do not stop entirely because one agent failed. Instead:
+- Add a prominent **Coverage Gaps** callout at the top of the PRD listing which analyses are missing and why
+- Populate the Open Questions section with entries for each missing analysis, noting what information is likely absent from the PRD as a result
 
 ## Core principles
 
