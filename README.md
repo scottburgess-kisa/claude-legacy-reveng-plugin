@@ -115,6 +115,52 @@ transcripts/*_redacted.txt
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
 | `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning |
 
+## Pipeline
+
+The `product-manager` agent orchestrates a multi-stage pipeline from raw inputs to a finished PRD. In the diagram below, rectangles are agents, hexagons are skills, and stadium shapes are files.
+
+```mermaid
+flowchart TB
+    screenshots(["screenshots/"])
+    transcripts(["transcripts/"])
+    src(["src/"])
+
+    curator[digital-content-curator]
+    screenshots --> curator
+    transcripts --> curator
+
+    curator -->|per screenshot| i2h{{image-to-html}}
+    curator -->|per transcript| ct{{curate-transcript}}
+    ct --> rp{{redact-pii}}
+
+    i2h --> html(["html/*.html"])
+    rp --> redacted(["*_redacted.txt"])
+
+    appdev[application-developer]
+    dbanalyst[database-analyst]
+    src --> appdev & dbanalyst
+
+    ba[business-analyst]
+    ia[interaction-analyst]
+    html & redacted --> ba & ia
+
+    ba --> domain(["domain-analysis.md"])
+    ia --> workflows(["interaction-analysis.md"])
+    appdev --> codebase(["application-analysis.md"])
+    dbanalyst --> database(["database-analysis.md"])
+
+    PM[product-manager]
+    domain & workflows & codebase & database --> PM
+    PM --> PRD(["PRD.md"])
+```
+
+| Stage | Components | Runs in parallel with |
+|-------|------------|-----------------------|
+| 1a — Content preparation | `digital-content-curator` invokes `image-to-html`, `curate-transcript`, then `redact-pii` | Stage 1b |
+| 1b — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 1a |
+| 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Each other; depends on Stage 1a |
+| 3 — Synthesis | `product-manager` reads all four analyses and writes `PRD.md` | None; depends on Stages 1b and 2 |
+
 ## Status
 
 Early development.
