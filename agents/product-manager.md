@@ -67,25 +67,19 @@ Attempt to Read all four analysis files:
 - `codebase/application-analysis.md`
 - `database/database-analysis.md`
 
-If **at least one** analysis file exists, proceed to synthesis. If **none** exist, stop and report to the user what is missing.
+All four analysis files must exist before proceeding. If any are missing, stop and report to the user which files are absent and which agents failed.
 
 ### Step 4: Validate analysis quality
 
-For each analysis file that exists, check that it:
+For each analysis file, check that it:
 - Contains expected top-level markdown headings
 - Has non-trivial content (more than 20 lines)
 
-If any file appears truncated or malformed, log a warning in the PRD's Open Questions section but proceed with what is available.
+If any file appears truncated or malformed, log a warning in the PRD's Open Questions section but proceed.
 
 ### Step 5: Read, cross-reference, and write PRD
 
-Read all available analysis files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints. Reconcile where multiple analyses describe the same concepts into a unified view. Then write the PRD.
-
-### Partial success
-
-If some analysts fail but others succeed, **produce the PRD with the available analyses**. Do not stop entirely because one agent failed. Instead:
-- Add a prominent **Coverage Gaps** callout at the top of the PRD listing which analyses are missing and why
-- Populate the Open Questions section with entries for each missing analysis, noting what information is likely absent from the PRD as a result
+Read all four analysis files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints. Reconcile where multiple analyses describe the same concepts into a unified view. Then write the PRD.
 
 ## Core principles
 
