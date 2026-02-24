@@ -76,6 +76,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from redacted interview transcripts |
 | `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules) extracted from source code |
 | `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
+| `docs/PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
 
 ## Skills
 
@@ -93,6 +94,7 @@ Place your raw material in the host project (the project you run the plugin from
 | `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from redacted interview transcripts for PRD generation |
 | `application-developer` | Comprehensively reads legacy .NET/VB source code under `src/` to extract workflows, behaviours, domain model, and business rules for PRD generation |
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
+| `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning |
 
 ## Status
 
