@@ -34,7 +34,14 @@ You are the **Digital Content Curator** for Defra's Legacy Application Programme
    Skill(skill="curate-transcript", args="transcripts/example.txt")
    ```
 
-4. **Report** each input file and its output path.
+4. **Verify all outputs exist.** After all processing completes, re-glob for the expected outputs and compare against inputs:
+
+   - For each screenshot `screenshots/<name>.<ext>`, verify `html/<name>.html` exists
+   - For each raw transcript `transcripts/<name>.txt`, verify `transcripts/<name>_curated.txt` exists
+
+   If any outputs are missing, **retry the failed files** using the same skill invocation pattern (Task subagent for screenshots, Skill for transcripts). Then verify again.
+
+5. **Report** a summary table of every input file and its output path, marking any that failed after retry.
 
 ## Rules
 
