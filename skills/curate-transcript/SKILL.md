@@ -1,12 +1,12 @@
 ---
-name: redact-transcript
-description: Redacts off-topic content (incumbent team agenda, feature requests, distractions) from a stakeholder interview transcript while preserving application walkthrough and domain knowledge verbatim.
+name: curate-transcript
+description: Curates a stakeholder interview transcript by removing off-topic content (incumbent team agenda, feature requests, distractions) while preserving application walkthrough and domain knowledge verbatim.
 user-invocable: true
 allowed-tools: Read, Edit, Bash(mkdir*;cp*)
 argument-hint: [transcript-path]
 ---
 
-You are redacting a Defra LAP stakeholder interview transcript. Your job is to remove off-topic passages. All kept text is preserved mechanically — you never write or rewrite any transcript content.
+You are curating a Defra LAP stakeholder interview transcript. Your job is to remove off-topic passages. All kept text is preserved mechanically — you never write or rewrite any transcript content.
 
 ## Input
 
@@ -14,9 +14,9 @@ The transcript file path is: `$ARGUMENTS`
 
 ## Steps
 
-1. **Derive the output path** by replacing the `.txt` extension with `_redacted.txt` in the same directory. For example:
-   - `transcripts/interview-1.txt` → `transcripts/interview-1_redacted.txt`
-   - `transcripts/deep-dive.txt` → `transcripts/deep-dive_redacted.txt`
+1. **Derive the output path** by replacing the `.txt` extension with `_curated.txt` in the same directory. For example:
+   - `transcripts/interview-1.txt` → `transcripts/interview-1_curated.txt`
+   - `transcripts/deep-dive.txt` → `transcripts/deep-dive_curated.txt`
 
 2. **Copy the original file** to the output path using `cp`. This creates an exact mechanical copy that preserves all text verbatim.
 
