@@ -122,6 +122,13 @@ One subsection per bounded context. For each context include:
 
 Source the context boundaries and terms from the domain analysis. Map entities from the codebase and database analyses into the appropriate context based on naming and responsibility.
 
+Tag each bounded context with a **Criticality** indicator:
+- **Core** — mentioned across multiple analyses, central to primary workflows
+- **Supporting** — mentioned in one analysis, part of secondary workflows
+- **Peripheral** — edge cases, rarely-used features
+
+Base classification on frequency of mention across analyses and position in primary vs. secondary workflows.
+
 #### 3.2 Context Map
 
 A single Mermaid `flowchart LR` diagram with:
@@ -133,10 +140,19 @@ Source relationship types from the domain analysis context map. If the codebase 
 
 #### 3.3 Entities
 
-TypeScript interfaces grouped under their bounded context as a level-5 heading. For each entity:
-- Define all properties with types (use `string`, `number`, `boolean`, `Date`, enums, or references to other entity interfaces)
-- Mark optional properties with `?`
-- Add a JSDoc comment above each interface with a one-line description
+Entities grouped under their bounded context as a level-5 heading. For each entity, produce a table:
+
+```markdown
+#### EntityName
+
+> One-line description
+
+| Property | Type | Required | Constraints | Source |
+|----------|------|----------|-------------|--------|
+```
+
+Where Type uses generic types: `string`, `integer`, `decimal`, `boolean`, `date`, `datetime`, `enum(values)`, or a reference to another entity name. Required is `yes` or `no`. Constraints captures validation rules, foreign keys, max length, etc. Source cites which analysis file the property was found in.
+
 - Derive property names from the codebase analysis class/model definitions
 - Derive property types and constraints from the database analysis schema (column types, nullability, foreign keys)
 
@@ -150,6 +166,7 @@ One subsection per screen or page identified in the interaction analysis. For ea
 - **Key fields** — bullet list of input/display fields with their data types where known
 - **Key actions** — bullet list of buttons/links and what each triggers
 - **Navigation** — which screens link to/from this one
+- **Workflows** — list of workflow names from Section 6 that include this screen
 
 Order screens by the primary user workflow (the most common path through the application first). Source entirely from the interaction analysis; enrich with route patterns from the codebase analysis where available.
 
@@ -158,6 +175,7 @@ Order screens by the primary user workflow (the most common path through the app
 Group rules by bounded context or feature area using level-4 headings. For each rule:
 - **Rule ID** — sequential identifier (e.g. BR-001) for cross-referencing
 - **Statement** — a clear, unambiguous statement of the rule in plain English
+- **Criticality** — **Core**, **Supporting**, or **Peripheral** (based on frequency of mention across analyses and position in primary vs. secondary workflows)
 - **Source** — which analysis file(s) describe this rule
 
 Include validation rules, conditional logic, state transitions, and domain invariants. Source from all four analyses — the domain analysis for business-level rules, the codebase analysis for code-enforced rules, and the database analysis for constraint-enforced rules. Where the same rule appears in multiple analyses, reconcile into a single statement and cite all sources.
@@ -171,6 +189,8 @@ One subsection per significant workflow. For each workflow:
 
 Use `sequenceDiagram` as the default diagram type. Only use `flowchart TD` for workflows that are primarily decision trees with multiple branching paths.
 
+For each step in the workflow, reference the corresponding screen name from Section 4 where applicable.
+
 Source from the interaction analysis (user-facing workflows) and the codebase analysis (system-level workflows). Name participants consistently using actor names from section 2 and bounded context names from section 3.
 
 ### 7. Computed Fields & Formulas
@@ -182,7 +202,16 @@ A table of every calculated or derived value found in the codebase and database 
 
 Express formulas in plain English or simple mathematical notation, not code. Include database-level computed columns, application-level calculated properties, and any derived values mentioned in business rules. Source from the codebase analysis (calculated properties, helper methods) and database analysis (computed columns, view definitions).
 
-### 8. Behaviour
+### 8. Reports & Analytics
+
+Catalogue of reports, dashboards, and printed outputs discovered in the analyses:
+
+| Report | Purpose | Data sources | Filters/parameters | Output format | Source |
+|--------|---------|-------------|-------------------|---------------|--------|
+
+Source from the codebase analysis (report generation code, Crystal Reports, SSRS references) and the interaction analysis (report screens). Include any scheduled or batch-generated reports identified in the codebase analysis.
+
+### 9. Behaviour
 
 BDD scenarios in Gherkin format grouped under level-4 headings by feature area. Write scenarios for:
 - Each key user journey identified in the workflows
@@ -232,7 +261,16 @@ For any integration with more than a simple request/response pattern, add a Merm
 
 Source from the codebase analysis (API calls, service references, configuration files) and the database analysis (linked servers, external data sources).
 
-### 12. Open Questions
+### 12. API Contracts
+
+For each inbound service the application exposes to external consumers, document:
+
+| Endpoint | Method | Request shape | Response shape | Error codes | Source |
+|----------|--------|--------------|----------------|-------------|--------|
+
+Source from the codebase analysis (ASMX endpoints, WCF contracts, Web API controllers). Only document contracts that external consumers depend on — these represent backward-compatibility requirements for the replacement system.
+
+### 13. Open Questions
 
 A numbered list of every contradiction, ambiguity, or gap found across the analyses. For each entry:
 
@@ -242,7 +280,7 @@ A numbered list of every contradiction, ambiguity, or gap found across the analy
 
 Include at minimum: conflicts between analyses describing the same concept differently, business rules with unclear trigger conditions, entities with mismatched fields between codebase and database, and any workflow steps where the analyses lack detail.
 
-### 13. Known Limitations & Deficiencies
+### 14. Known Limitations & Deficiencies
 
 A bullet list of problems, gaps, and workarounds explicitly described in the analyses:
 - Missing input validations (fields that accept invalid data)
@@ -253,7 +291,26 @@ A bullet list of problems, gaps, and workarounds explicitly described in the ana
 
 State each limitation factually with its source. Do not suggest fixes — this section documents the current state.
 
-### 14. Glossary
+### 15. Data Migration Considerations
+
+Document data migration factors from the database analysis:
+- **Data volumes and growth patterns** — table row counts, growth rates, and storage implications where inferable
+- **Data quality issues** — orphaned records, nulls in required fields, inconsistent formats
+- **Lookup and reference data** — tables that must be seeded in the new system
+- **Transformation rules** — where old and new schemas differ, document the mapping
+
+Source primarily from the database analysis. Supplement with codebase analysis where data transformation logic exists in application code.
+
+### 16. Non-Functional Requirements
+
+Performance characteristics and operational requirements inferred from the analyses:
+- **Performance** — timeouts, batch sizes, pagination limits observable in code
+- **Availability** — scheduled downtime, maintenance windows mentioned in transcripts
+- **Audit and logging** — requirements from codebase and database analyses
+
+Flag each item as "inferred from code — verify with operational team" where not explicitly stated by a stakeholder.
+
+### 17. Glossary
 
 An alphabetised table of every domain term from the ubiquitous language:
 
@@ -262,9 +319,14 @@ An alphabetised table of every domain term from the ubiquitous language:
 
 Source directly from the domain analysis glossary. Use the exact definitions provided. Where other analyses use a term differently, note the variation in the definition column.
 
-### 15. Sources
+### 18. Sources
 
-A bullet list of all four analysis files with their file paths. For each, note the date of generation if present in the file, and a one-line summary of what it contributed to the PRD.
+A bullet list of all analysis files with their file paths. For each, include:
+- The date of generation if present in the file
+- A one-line summary of what it contributed to the PRD
+- The list of input files it processed (from the metadata block at the top of each analysis file)
+
+Also include a raw material summary: the total number of screenshots, transcripts, and source files that fed into the pipeline.
 
 ## Output guidance
 
@@ -273,7 +335,7 @@ A bullet list of all four analysis files with their file paths. For each, note t
 - **Cite source analysis files** in every section so the reader can trace claims to the relevant analysis.
 - Use consistent markdown structure (headings, bullet lists, tables).
 - Use Mermaid diagrams: `flowchart LR` with subgraphs for context maps, `sequenceDiagram` for actor-system interactions, `flowchart TD` for decision processes.
-- Use TypeScript interfaces for entity definitions.
+- Use language-neutral tabular format for entity definitions (not TypeScript or any language-specific syntax).
 - Use Gherkin (`Given/When/Then`) for BDD scenarios.
 - Do not speculate — if the analyses do not contain enough information, note the gap in Open Questions.
 
