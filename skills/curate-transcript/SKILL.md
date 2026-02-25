@@ -43,7 +43,7 @@ The transcript file path is: `$ARGUMENTS`
    **Bias toward removal.** If a passage is borderline — it mentions the application but is primarily about something else (e.g. staffing a team to support it, or procurement of a replacement) — remove it. The curated transcript should contain only content that helps an engineer understand what the application does today.
 
 6. **Remove each identified passage** using the Edit tool on the output file. For each passage:
-   - Set `old_string` to the **exact text** of the passage to remove (copy it precisely, including whitespace and line breaks)
+   - Set `old_string` to the **exact text** of the passage to remove (copy it precisely, including whitespace, timestamps and line breaks)
    - Set `new_string` to an empty string `""`
    - If removing a passage leaves adjacent blank lines, make a follow-up Edit to collapse them to a single blank line
 
