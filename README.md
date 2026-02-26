@@ -100,6 +100,7 @@ transcripts/*_curated.txt
 |-------|-------------|
 | `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
 | `curate-transcript` | Removes off-topic content from interview transcripts |
+| `validate-mermaid` | Validates all Mermaid diagram blocks in a markdown file and fixes broken diagrams in place |
 
 ## Agents
 

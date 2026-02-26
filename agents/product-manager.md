@@ -6,7 +6,7 @@ description: >
   curated transcripts) to exist before running. Automatically runs any
   missing analyst agents before producing output/PRD.md.
 model: claude-sonnet-4-20250514
-tools: Read, Write, Task, Glob
+tools: Read, Write, Task, Glob, Skill
 memory: project
 ---
 
@@ -84,6 +84,10 @@ If any file appears truncated or malformed, log a warning in the PRD's Open Ques
 ### Step 6: Read, cross-reference, and write PRD
 
 Read all four analysis files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints. Reconcile where multiple analyses describe the same concepts into a unified view. Then write the PRD.
+
+### Step 7: Validate Mermaid diagrams
+
+Invoke the `validate-mermaid` skill on `output/PRD.md` to validate and fix any broken Mermaid diagrams. If any diagrams remain unfixable after retries, note them in the Open Questions section.
 
 ## Core principles
 

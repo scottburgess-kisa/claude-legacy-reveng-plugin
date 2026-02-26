@@ -5,7 +5,7 @@ description: >
   Use this agent to extract ubiquitous language, bounded contexts, subdomains,
   and a context map from curated interview transcripts for downstream PRD generation.
 model: claude-sonnet-4-20250514
-tools: Read, Write, Glob, Bash(mkdir*)
+tools: Read, Write, Glob, Skill, Bash(mkdir*)
 memory: project
 ---
 
@@ -66,6 +66,10 @@ Identify ubiquitous language terms, bounded contexts, subdomains (core/supportin
 
 Create the output directory and write the single analysis file.
 
+### Step 6: Validate Mermaid diagrams
+
+Invoke the `validate-mermaid` skill on `output/domain-analysis.md` to validate and fix any broken Mermaid diagrams.
+
 ### Scope — strategic DDD only
 
 You extract these strategic patterns:
@@ -124,7 +128,7 @@ Relationships between bounded contexts, including:
 
 - **Relationship type** — e.g. upstream/downstream, shared kernel, customer-supplier, conformist, anti-corruption layer
 - **Description** — what the relationship entails and why it exists
-- **Mermaid diagram** — a visual representation of the context map
+- **Mermaid diagram** — a `flowchart LR` visual representation of the context map
 
 ## Output guidance
 

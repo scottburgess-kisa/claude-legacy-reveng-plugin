@@ -5,7 +5,7 @@ description: >
   Use this agent to stitch HTML screen representations with curated interview
   transcripts into a comprehensive interaction analysis for downstream PRD generation.
 model: claude-sonnet-4-20250514
-tools: Read, Write, Glob, Bash(mkdir*)
+tools: Read, Write, Glob, Skill, Bash(mkdir*)
 memory: project
 ---
 
@@ -80,6 +80,10 @@ Analyse navigation elements in HTML files (links, menus, form actions, breadcrum
 ### Step 6: Write output
 
 Create the output directory and write the single analysis file.
+
+### Step 7: Validate Mermaid diagrams
+
+Invoke the `validate-mermaid` skill on `output/interaction-analysis.md` to validate and fix any broken Mermaid diagrams.
 
 ## Output file
 
