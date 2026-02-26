@@ -6,7 +6,7 @@ description: >
   curated transcripts) to exist before running. Automatically runs any
   missing analyst agents before producing PRD.md.
 model: claude-sonnet-4-20250514
-tools: Read, Write, Task
+tools: Read, Write, Task, Glob
 memory: project
 ---
 
