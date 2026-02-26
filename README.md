@@ -110,11 +110,11 @@ transcripts/*_curated.txt
 | `interaction-analyst` | Stitches HTML screen representations with curated interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
 | `application-developer` | Comprehensively reads legacy .NET source code under `src/` to extract workflows, behaviours, domain model, business rules, and reports for PRD generation |
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
-| `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning |
+| `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning. Requires curated content as a prerequisite |
 
 ## Pipeline
 
-The `product-manager` agent orchestrates a multi-stage pipeline from raw inputs to a finished PRD. In the diagram below, rectangles are agents, hexagons are skills, and stadium shapes are files.
+The pipeline runs in stages from raw inputs to a finished PRD. Stage 0 (content curation) is run manually before launching the `product-manager`, which orchestrates the remaining stages. In the diagram below, rectangles are agents, hexagons are skills, stadium shapes are files, and the dashed border marks the manual stage.
 
 ```mermaid
 flowchart TB
@@ -122,15 +122,22 @@ flowchart TB
     transcripts(["transcripts/"])
     src(["src/"])
 
-    curator[digital-content-curator]
+    subgraph stage0 ["Stage 0 - manual"]
+        curator[digital-content-curator]
+        i2h{{image-to-html}}
+        ct{{curate-transcript}}
+        html(["html/*.html"])
+        curated(["*_curated.txt"])
+
+        curator -->|per screenshot| i2h
+        curator -->|per transcript| ct
+        i2h --> html
+        ct --> curated
+    end
+    style stage0 stroke-dasharray: 5 5
+
     screenshots --> curator
     transcripts --> curator
-
-    curator -->|per screenshot| i2h{{image-to-html}}
-    curator -->|per transcript| ct{{curate-transcript}}
-
-    i2h --> html(["html/*.html"])
-    ct --> curated(["*_curated.txt"])
 
     appdev[application-developer]
     dbanalyst[database-analyst]
@@ -152,10 +159,10 @@ flowchart TB
 
 | Stage | Components | Runs in parallel with |
 |-------|------------|-----------------------|
-| 1a — Content preparation | `digital-content-curator` invokes `image-to-html` and `curate-transcript` | Stage 1b |
-| 1b — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 1a |
-| 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Each other; depends on Stage 1a |
-| 3 — Synthesis | `product-manager` reads all four analyses and writes `PRD.md` | None; depends on Stages 1b and 2 |
+| 0 — Content preparation (manual) | `digital-content-curator` invokes `image-to-html` and `curate-transcript` | Run before launching `product-manager` |
+| 1 — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 2 |
+| 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Stage 1; depends on Stage 0 |
+| 3 — Synthesis | `product-manager` reads all four analyses and writes `PRD.md` | None; depends on Stages 1 and 2 |
 
 ## Status
 
