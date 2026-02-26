@@ -27,7 +27,8 @@ The transcript file path is: `$ARGUMENTS`
    **Keep** — content directly about the application or its domain:
    - Application walkthrough content: screen descriptions, user flows, functionality explanations, how the system behaves
    - Domain knowledge: business rules, terminology, processes, regulations that the application implements
-   - Technical details about the application: architecture, integrations, data flows, infrastructure it runs on
+   - Technical details about the application: architecture, data flows, infrastructure it runs on
+   - Integrations and dependencies: third-party systems, external services, APIs, data exchanges, upstream/downstream applications the system connects to
 
    **Remove** — everything else, including but not limited to:
    - The incumbent modernisation team's agenda, plans, opinions, or approach discussions
@@ -40,7 +41,7 @@ The transcript file path is: `$ARGUMENTS`
    - Meta-discussion about the interview process itself
    - Tangential conversation not related to the current application or its domain
 
-   **Bias toward removal.** If a passage is borderline — it mentions the application but is primarily about something else (e.g. staffing a team to support it, or procurement of a replacement) — remove it. The curated transcript should contain only content that helps an engineer understand what the application does today.
+   **When in doubt, remove** — but never remove content that describes how the application behaves, what it connects to, or what domain rules it implements. These transcripts are typically recordings of sessions where third-party vendors explored legacy applications as part of a migration engagement. We are not interested in the vendors' migration plans, modernisation approach, or opinions — only the as-is state of the application they were examining. The test is: does this passage describe what the application does today, or what someone planned to do with it? Keep the former, remove the latter.
 
 5. **Remove each identified passage** using the Edit tool on the output file. For each passage:
    - Set `old_string` to the **exact text** of the passage to remove (copy it precisely, including whitespace, timestamps and line breaks)
