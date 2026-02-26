@@ -100,36 +100,58 @@ Begin the output file with a metadata block listing every input file that was re
 -->
 ```
 
-Structure the file with the sections below. These are guidance — adapt to what the material actually reveals. Omit sections that have no relevant content; add subsections where the material warrants deeper breakdown.
+Structure the file with the four sections below. **All four top-level sections are mandatory** — always include every section in every run. If a section has no relevant content, include it with a brief note explaining why (e.g. "No user workflows could be identified from the available transcripts.").
 
 ### 1. Screen Inventory
 
-Every screen discovered from HTML files: title, purpose, key fields and controls. Keep this lean — just enough context to support the workflow descriptions that follow. Cite the HTML file path for each screen (e.g. `html/dashboard.html`).
+Every screen discovered from HTML files, using the following template for each screen. Tag report and dashboard screens explicitly in their Purpose line (e.g. "Purpose: Dashboard — provides an overview of...").
+
+```markdown
+#### [Screen Title]
+
+- **Purpose:** one sentence
+- **HTML reference:** `html/filename.html`
+- **Key fields:** bullet list of input/display fields
+- **Key actions:** bullet list of buttons/links and what each triggers
+- **Navigation:** which screens link to/from this one
+- **Access restrictions:** any role or permission constraints observed (or "None observed")
+- **Transcript references:** which curated transcripts discuss this screen
+```
 
 ### 2. User Workflows
 
-The core output. For each identified workflow:
+The core output. Each workflow **must** have an explicit name used as its subsection heading (e.g. `#### Record an Animal Movement`). This enables downstream agents to cross-reference screens to workflow names.
 
-- A mermaid flowchart (`flowchart TD`) showing the sequence of screens and steps. Use descriptive node labels and reference screen names from the HTML files where matched. Include decision points as rhombus nodes and outcomes/end states as rounded rectangles. Example structure:
+Use the following template for each workflow:
 
-  ````markdown
-  ```mermaid
-  flowchart TD
-      A[Dashboard] --> B[Select Record Movement]
-      B --> C{Movement Type?}
-      C -->|On-farm| D[On-farm Movement Form]
-      C -->|Off-farm| E[Off-farm Movement Form]
-      D --> F[Confirmation]
-      E --> F
-  ```
-  ````
+````markdown
+#### [Workflow Name]
 
-- Screen-by-screen notes for each step in the workflow:
-  - What the user does at this step
-  - Key fields, actions, or controls involved
-  - Business rules or validation observed
-  - HTML cross-reference (e.g. `**HTML reference:** html/record-movement.html`)
-  - Transcript cross-reference (e.g. `**Transcript reference:** transcripts/user-interview_curated.txt`)
+- **Trigger:** what initiates this workflow
+- **Business outcome:** what the workflow achieves
+
+```mermaid
+flowchart TD
+    A[Dashboard] --> B[Select Record Movement]
+    B --> C{Movement Type?}
+    C -->|On-farm| D[On-farm Movement Form]
+    C -->|Off-farm| E[Off-farm Movement Form]
+    D --> F[Confirmation]
+    E --> F
+```
+
+##### Step-by-step
+
+| Step | Screen | User action | Key fields/controls | Business rules | HTML reference | Transcript reference |
+|------|--------|-------------|---------------------|----------------|----------------|----------------------|
+| 1    | ...    | ...         | ...                 | ...            | ...            | ...                  |
+````
+
+Use descriptive node labels in the mermaid flowchart and reference screen names from the HTML files where matched. Include decision points as rhombus nodes and outcomes/end states as rounded rectangles.
+
+#### Workarounds
+
+At the end of this section, include a **Workarounds** subsection listing any workarounds users described in transcripts (e.g. "Users manually track X in a spreadsheet because the system does not support Y."). If none were identified, state "No workarounds identified."
 
 ### 3. Screen Navigation Map
 
