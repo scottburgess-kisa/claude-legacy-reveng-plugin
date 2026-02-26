@@ -28,11 +28,11 @@ Before beginning any work, check for inputs:
 1. Glob for `transcripts/*_curated.txt`
 2. Glob for `html/**/*.html`
 
-If **neither** input type is found, stop and tell the user:
+If **either** input type is missing, stop and tell the user which input is absent:
 
-> No curated transcripts or HTML screen files found. Please run the **Digital Content Curator** agent first to prepare raw material.
+> Missing [HTML screen files / curated transcripts]. Please run the **Digital Content Curator** agent first to produce the missing input.
 
-Do not produce any output files. If at least one input type is found, proceed with what is available.
+Do not produce any output files.
 
 ## No domain knowledge, no output
 

@@ -2,8 +2,9 @@
 name: product-manager
 description: >
   PRD generator that synthesises analysis outputs into a comprehensive
-  Product Requirements Document. Automatically runs any missing analyst
-  agents before producing PRD.md.
+  Product Requirements Document. Requires curated content (HTML screens and
+  curated transcripts) to exist before running. Automatically runs any
+  missing analyst agents before producing PRD.md.
 model: claude-sonnet-4-20250514
 tools: Read, Write, Task
 memory: project
@@ -36,29 +37,32 @@ On each run you **regenerate the PRD from scratch** — read every available ana
 
 Work through these steps in order:
 
-### Step 1: Check for raw material and launch preparation in parallel with code analysts
+### Step 1: Prerequisite check — curated content must exist
 
-Use Glob to check what raw material and source code exists:
-- Glob for `screenshots/` files (`.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`)
-- Glob for raw transcripts: `transcripts/*.txt` (excluding `*_curated.txt`)
-- Glob for `src/`
+Use Glob to check for curated content:
+- Glob for `html/**/*.html`
+- Glob for `transcripts/*_curated.txt`
 
-Launch agents based on what exists:
-- If raw screenshots or transcripts exist, launch `digital-content-curator` via Task
-- If `src/` exists, launch `application-developer` and `database-analyst` via Task in parallel (these have no curator dependency)
+If **either** input type is missing, **stop** and tell the user which input is absent:
 
-Wait for the curator to complete (if launched) before proceeding to Step 2.
+> Missing [HTML screen files / curated transcripts]. Please run the **Digital Content Curator** agent first to produce the missing input before launching the product-manager.
 
-### Step 2: Launch remaining analysts
+Do not proceed further.
+
+### Step 2: Launch code analysts
+
+Glob for `src/`. If source code exists, launch `application-developer` and `database-analyst` via Task in parallel.
+
+### Step 3: Launch remaining analysts
 
 Attempt to Read `domain/domain-analysis.md` and `workflows/interaction-analysis.md`. For each missing file, launch the corresponding agent via Task:
 
 - `domain/domain-analysis.md` → `business-analyst`
 - `workflows/interaction-analysis.md` → `interaction-analyst`
 
-These agents depend on curator output (curated transcripts and HTML files), which is why they run after the curator completes. Run both in parallel if both are missing.
+These agents depend on curator output (curated transcripts and HTML files), which must already exist from the prerequisite check. Run both in parallel if both are missing.
 
-### Step 3: Collect analysis files
+### Step 4: Collect analysis files
 
 Attempt to Read all four analysis files:
 
@@ -69,7 +73,7 @@ Attempt to Read all four analysis files:
 
 All four analysis files must exist before proceeding. If any are missing, stop and report to the user which files are absent and which agents failed.
 
-### Step 4: Validate analysis quality
+### Step 5: Validate analysis quality
 
 For each analysis file, check that it:
 - Contains expected top-level markdown headings
@@ -77,7 +81,7 @@ For each analysis file, check that it:
 
 If any file appears truncated or malformed, log a warning in the PRD's Open Questions section but proceed.
 
-### Step 5: Read, cross-reference, and write PRD
+### Step 6: Read, cross-reference, and write PRD
 
 Read all four analysis files. Note domain terms, business concepts, process descriptions, entity definitions, business rules, workflows, screens, integrations, and security constraints. Reconcile where multiple analyses describe the same concepts into a unified view. Then write the PRD.
 
