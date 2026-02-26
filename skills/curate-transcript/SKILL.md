@@ -20,9 +20,9 @@ The transcript file path is: `$ARGUMENTS`
 
 2. **Copy the original file** to the output path using `cp`. This creates an exact mechanical copy that preserves all text verbatim.
 
-4. **Read the output file** using the Read tool.
+3. **Read the output file** using the Read tool.
 
-5. **Identify passages to remove.** Classify content into two categories:
+4. **Identify passages to remove.** Classify content into two categories:
 
    **Keep** — content directly about the application or its domain:
    - Application walkthrough content: screen descriptions, user flows, functionality explanations, how the system behaves
@@ -42,12 +42,12 @@ The transcript file path is: `$ARGUMENTS`
 
    **Bias toward removal.** If a passage is borderline — it mentions the application but is primarily about something else (e.g. staffing a team to support it, or procurement of a replacement) — remove it. The curated transcript should contain only content that helps an engineer understand what the application does today.
 
-6. **Remove each identified passage** using the Edit tool on the output file. For each passage:
+5. **Remove each identified passage** using the Edit tool on the output file. For each passage:
    - Set `old_string` to the **exact text** of the passage to remove (copy it precisely, including whitespace, timestamps and line breaks)
    - Set `new_string` to an empty string `""`
    - If removing a passage leaves adjacent blank lines, make a follow-up Edit to collapse them to a single blank line
 
-7. **Return a confirmation message** containing:
+6. **Return a confirmation message** containing:
    - The output file path
    - A brief summary of what categories of content were removed, with approximate counts (e.g. "Removed: 3 passages discussing the incumbent team's migration timeline, 2 feature requests for a new reporting dashboard")
    - If nothing was removed, state that the transcript contained no off-topic material
