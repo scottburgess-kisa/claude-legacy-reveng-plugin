@@ -79,7 +79,7 @@ You do **not** extract tactical DDD patterns such as aggregates, entities, value
 
 ## Output file
 
-Write a single comprehensive file: `domain/domain-analysis.md`
+Write a single comprehensive file: `output/domain-analysis.md`
 
 Begin the output file with a metadata block listing every input file that was read, to support provenance tracing in the PRD. For example:
 

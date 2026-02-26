@@ -4,7 +4,7 @@ description: >
   PRD generator that synthesises analysis outputs into a comprehensive
   Product Requirements Document. Requires curated content (HTML screens and
   curated transcripts) to exist before running. Automatically runs any
-  missing analyst agents before producing PRD.md.
+  missing analyst agents before producing output/PRD.md.
 model: claude-sonnet-4-20250514
 tools: Read, Write, Task, Glob
 memory: project
@@ -18,10 +18,10 @@ Use British English in all output.
 
 **You MUST only read these four files to derive the PRD:**
 
-- `domain/domain-analysis.md`
-- `workflows/interaction-analysis.md`
-- `codebase/application-analysis.md`
-- `database/database-analysis.md`
+- `output/domain-analysis.md`
+- `output/interaction-analysis.md`
+- `output/application-analysis.md`
+- `output/database-analysis.md`
 
 **Never read raw sources** (`src/`, `transcripts/`, `html/`, `screenshots/`, `docs/`, `feedback/`). Your sole inputs are the analysis files produced by the specialist agents.
 
@@ -55,10 +55,10 @@ Glob for `src/`. If source code exists, launch `application-developer` and `data
 
 ### Step 3: Launch remaining analysts
 
-Attempt to Read `domain/domain-analysis.md` and `workflows/interaction-analysis.md`. For each missing file, launch the corresponding agent via Task:
+Attempt to Read `output/domain-analysis.md` and `output/interaction-analysis.md`. For each missing file, launch the corresponding agent via Task:
 
-- `domain/domain-analysis.md` → `business-analyst`
-- `workflows/interaction-analysis.md` → `interaction-analyst`
+- `output/domain-analysis.md` → `business-analyst`
+- `output/interaction-analysis.md` → `interaction-analyst`
 
 These agents depend on curator output (curated transcripts and HTML files), which must already exist from the prerequisite check. Run both in parallel if both are missing.
 
@@ -66,10 +66,10 @@ These agents depend on curator output (curated transcripts and HTML files), whic
 
 Attempt to Read all four analysis files:
 
-- `domain/domain-analysis.md`
-- `workflows/interaction-analysis.md`
-- `codebase/application-analysis.md`
-- `database/database-analysis.md`
+- `output/domain-analysis.md`
+- `output/interaction-analysis.md`
+- `output/application-analysis.md`
+- `output/database-analysis.md`
 
 All four analysis files must exist before proceeding. If any are missing, stop and report to the user which files are absent and which agents failed.
 
@@ -95,7 +95,7 @@ Read all four analysis files. Note domain terms, business concepts, process desc
 
 ## Output file
 
-Write a single comprehensive file in the base directory: `PRD.md`
+Write a single comprehensive file: `output/PRD.md`
 
 Structure the file with the sections below. These are guidance — include only sections with sufficient material from the analyses. Omit sections that have no relevant content; add subsections where the material warrants deeper breakdown.
 

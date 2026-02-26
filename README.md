@@ -72,19 +72,19 @@ Place your raw material in the host project (the project you run the plugin from
 |------|------------|-------------|
 | `html/*.html` | `image-to-html` | Semantic HTML representation of each screenshot |
 | `transcripts/*_curated.txt` | `curate-transcript` | Interview transcripts with off-topic content removed (intermediate) |
-| `domain/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from curated transcripts and HTML screens |
-| `workflows/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and curated transcripts |
-| `codebase/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules, reports) extracted from source code |
-| `database/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
-| `PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
+| `output/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from curated transcripts and HTML screens |
+| `output/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and curated transcripts |
+| `output/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules, reports) extracted from source code |
+| `output/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
+| `output/PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
 
 ### Output management
 
 Generated outputs are regeneratable artefacts. Recommended version control approach:
 
 **Commit to version control:**
-- `PRD.md` — the final deliverable
-- `domain/domain-analysis.md`, `workflows/interaction-analysis.md`, `codebase/application-analysis.md`, `database/database-analysis.md` — the four analysis files
+- `output/PRD.md` — the final deliverable
+- `output/domain-analysis.md`, `output/interaction-analysis.md`, `output/application-analysis.md`, `output/database-analysis.md` — the four analysis files
 
 **Add to `.gitignore` (intermediate/regeneratable):**
 
@@ -147,14 +147,14 @@ flowchart TB
     ia[interaction-analyst]
     html & curated --> ba & ia
 
-    ba --> domain(["domain-analysis.md"])
-    ia --> workflows(["interaction-analysis.md"])
-    appdev --> codebase(["application-analysis.md"])
-    dbanalyst --> database(["database-analysis.md"])
+    ba --> domain(["output/domain-analysis.md"])
+    ia --> interaction(["output/interaction-analysis.md"])
+    appdev --> application(["output/application-analysis.md"])
+    dbanalyst --> database(["output/database-analysis.md"])
 
     PM[product-manager]
-    domain & workflows & codebase & database --> PM
-    PM --> PRD(["PRD.md"])
+    domain & interaction & application & database --> PM
+    PM --> PRD(["output/PRD.md"])
 ```
 
 | Stage | Components | Runs in parallel with |
@@ -162,7 +162,7 @@ flowchart TB
 | 0 — Content preparation (manual) | `digital-content-curator` invokes `image-to-html` and `curate-transcript` | Run before launching `product-manager` |
 | 1 — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 2 |
 | 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Stage 1; depends on Stage 0 |
-| 3 — Synthesis | `product-manager` reads all four analyses and writes `PRD.md` | None; depends on Stages 1 and 2 |
+| 3 — Synthesis | `product-manager` reads all four analyses and writes `output/PRD.md` | None; depends on Stages 1 and 2 |
 
 ## Status
 

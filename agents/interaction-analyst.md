@@ -83,7 +83,7 @@ Create the output directory and write the single analysis file.
 
 ## Output file
 
-Write a single comprehensive file: `workflows/interaction-analysis.md`
+Write a single comprehensive file: `output/interaction-analysis.md`
 
 Begin the output file with a metadata block listing every input file that was read, to support provenance tracing in the PRD. For example:
 
