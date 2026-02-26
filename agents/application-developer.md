@@ -101,72 +101,117 @@ Begin the output file with a metadata block listing every input file that was re
 -->
 ```
 
-Structure the file with the sections below. These are guidance — adapt to what the code actually reveals. Omit sections that have no relevant content; add subsections where the code warrants deeper breakdown.
+Structure the file with the nine sections below. **All nine top-level sections are mandatory** — always include every section in every run. If a section has no relevant content, include it with a brief note explaining why (e.g. "No integration points could be identified from the source code.").
 
 ### 1. Application Overview
 
-- Purpose and function of the application
-- Technology stack (language, framework, runtime)
-- Solution structure — projects and their roles
-- Framework versions and target platforms
-- External dependencies (Defra-internal assemblies, third-party libraries)
-- Configuration summary (application settings, authentication mode, service endpoints)
+- **Purpose:** one sentence describing what the application does
+- **Technology stack:** language, framework, runtime
+- **Framework version:** target platform
+- **Solution structure:** project names and roles (bullet list)
+- **External dependencies:** Defra-internal assemblies, third-party libraries (bullet list)
+- **Configuration summary:** authentication mode, service endpoints, key settings (bullet list)
 
 ### 2. User Roles and Access Control
 
-- Roles defined or referenced in the code
-- Permissions and authorisation checks
-- Authentication mechanism
-- Role-based feature access — which roles can access which areas
+Roles table:
+
+| Role | Permissions / Access | Source |
+|------|---------------------|--------|
+
+Plus fields:
+
+- **Authentication mechanism:** e.g. Forms Authentication, Windows Authentication
+- **Authorisation approach:** e.g. role-based checks in code, attribute-based
 
 ### 3. Features and Capabilities
 
-- Functional areas the application provides, grouped logically
-- For each feature: what it does, which source files implement it
-- Page/screen inventory (ASPX pages, user controls, web services)
+For each functional area, create a named `####` subsection:
+
+#### [Feature Name]
+- **Description:** what it does
+- **Pages/screens:** ASPX pages, user controls, web services implementing this feature
+- **Source files:** code-behind and class files
 
 ### 4. Workflows and Behaviours
 
-- User-facing workflows — step-by-step processes a user follows
-- Page/screen flows — navigation paths through the application
-- Form submission processes — what happens when a user submits data
-- State transitions — how entities change state
-- Automated or background behaviours (timers, scheduled tasks, event handlers)
+For each workflow, create a named `####` subsection:
+
+#### [Workflow Name]
+- **Type:** user-facing | system/background
+- **Trigger:** what initiates this workflow
+- **Steps:** numbered list of steps with source file references
+- **State transitions:** if applicable, entity state changes
+- **Source files:** file paths
 
 ### 5. Business Rules and Validation
 
-- Validation rules on user input
-- Business rules and constraints enforced in code
-- Calculations and formulas
-- Conditional logic that governs behaviour
-- Error handling that encodes business meaning
+Business rules table with sequential `BR-xxx` IDs:
+
+| ID | Rule | Description | Criticality | Source |
+|------|------|-------------|-------------|--------|
+| BR-001 | … | … | Core / Supporting / Peripheral | source file path(s) |
+
+- **Criticality** values: **Core** (fundamental business logic), **Supporting** (important but not central), **Peripheral** (convenience validation)
+- Include validation rules, business constraints, calculations/formulas, and conditional logic
 
 ### 6. Domain Model
 
-- Entities and business object classes — their properties and purpose
-- Relationships between entities
-- Entity behaviours and methods
-- Enumerations, constants, and value objects
-- Collection and list classes
+For each entity or business object class, create a named `####` subsection:
+
+#### [Entity / Class Name]
+- **Purpose:** one sentence
+- **Source file:** file path
+
+| Property | Type | Description | Source |
+|----------|------|-------------|--------|
+
+After entities, include the following subsections:
+
+#### Enumerations
+
+| Enum Name | Values | Source |
+|-----------|--------|--------|
+
+#### Relationships
+
+| Entity A | Entity B | Relationship Type | Source |
+|----------|----------|-------------------|--------|
 
 ### 7. Integration Points
 
-- External service calls (web services, APIs, HTTP requests)
-- File I/O (imports, exports, report generation)
-- Email and notification sending
-- External system dependencies
+Integration points table:
+
+| Integration | Type | Endpoint / Target | Direction | Source |
+|-------------|------|-------------------|-----------|--------|
+
+- **Type** values: web service, API call, file I/O, email, external system
+- **Direction** values: inbound, outbound, bidirectional
 
 ### 8. Reports
 
-- Crystal Reports (`.rpt` files): name, purpose, data sources, parameters
-- SSRS reports (`.rdl`/`.rdlc` files): name, purpose, data sources, parameters
-- Code-generated reports: report generation logic, output format, triggers
+Reports table:
+
+| Report | Type | Purpose | Data Sources | Parameters | Output Format | Source |
+|--------|------|---------|-------------|------------|---------------|--------|
+
+- **Type** values: Crystal Report, SSRS, code-generated
 
 ### 9. Cross-Reference: Application to Database
 
-- Data access patterns — how the application reads/writes data (ADO.NET, Entity Framework, typed datasets)
-- Entity-to-table mapping where inferable from code
-- Stored procedure calls — which application files call which procedures
+#### 9.1 Data Access Patterns
+
+- **Primary data access approach:** e.g. ADO.NET, Entity Framework, typed datasets
+
+#### 9.2 Entity-to-Table Mapping
+
+| Entity / Class | Database Table(s) | Source |
+|---------------|-------------------|--------|
+
+#### 9.3 Stored Procedure Calls
+
+| Stored Procedure | Calling File(s) | Purpose | Source |
+|-----------------|-----------------|---------|--------|
 
 **Do not include:** SQL queries, stored procedure internals, database schema, or data access implementation details — these are the responsibility of the database-analyst agent.
 
