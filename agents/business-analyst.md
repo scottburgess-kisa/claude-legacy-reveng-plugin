@@ -60,7 +60,7 @@ Glob for `html/**/*.html` and read every file. Note domain terms visible in UI l
 
 ### Step 4: Extract strategic DDD patterns
 
-Identify ubiquitous language terms, bounded contexts, subdomains (core/supporting/generic), and context map relationships. Every pattern must be traceable to specific transcript evidence.
+Identify ubiquitous language terms, bounded contexts, subdomains (core/supporting/generic), context map relationships, actors and stakeholders, and domain rules and invariants. Every pattern must be traceable to specific transcript evidence.
 
 ### Step 5: Write output
 
@@ -78,6 +78,8 @@ You extract these strategic patterns:
 - **Bounded contexts** — areas of the domain with distinct responsibilities
 - **Subdomains** — classified as core, supporting, or generic
 - **Context map** — relationships between bounded contexts
+- **Actors and stakeholders** — domain-level human and organisational roles
+- **Domain rules and invariants** — business-level rules stated as domain knowledge
 
 You do **not** extract tactical DDD patterns such as aggregates, entities, value objects, or domain events. Stay at the strategic level.
 
@@ -96,39 +98,97 @@ Begin the output file with a metadata block listing every input file that was re
 -->
 ```
 
-Structure the file with the sections below. These are guidance — adapt to what the material actually reveals. Omit sections that have no relevant content; add subsections where the material warrants deeper breakdown.
+Structure the file with the six sections below. **All six top-level sections are mandatory** — always include every section in every run. If a section has no relevant content, include it with a brief note explaining why (e.g. "No domain rules could be identified from the available transcripts.").
 
 ### 1. Ubiquitous Language
 
-A glossary of domain terms extracted from the transcripts. Each entry includes:
+A glossary of domain terms extracted from the transcripts, presented as an **alphabetised table**:
+
+```
+| Term | Definition | Source |
+|------|------------|--------|
+| … | … | transcript file path(s) |
+```
 
 - **Term** — the domain term as used by stakeholders
 - **Definition** — what the term means in the business context
 - **Source** — which transcript(s) the term was found in (cite file paths)
 
+Sort the table alphabetically by Term.
+
 ### 2. Bounded Contexts
 
-Identified bounded contexts, each with:
+Identified bounded contexts. Use a `####` subsection per context:
 
-- **Name** — a descriptive name for the context
-- **Responsibility** — what this context is responsible for
-- **Key terms** — which ubiquitous language terms belong to this context
+```
+#### [Context Name]
+- **Responsibility:** one sentence
+- **Key terms:** comma-separated list from Section 1
+- **Transcript references:** file paths
+```
+
+Every term from Section 1 must appear in exactly one context's key terms.
 
 ### 3. Subdomains
 
-Classification of subdomains with:
+Classification of subdomains. Use a `####` subsection per subdomain:
 
-- **Name** — the subdomain name
-- **Type** — core, supporting, or generic
-- **Rationale** — why this classification, drawn from transcript evidence
+```
+#### [Subdomain Name]
+- **Type:** core | supporting | generic
+- **Bounded context:** which context(s) from Section 2
+- **Rationale:** transcript evidence
+- **Transcript references:** file paths
+```
 
 ### 4. Context Map
 
-Relationships between bounded contexts, including:
+#### 4.1 Relationship Table
 
-- **Relationship type** — e.g. upstream/downstream, shared kernel, customer-supplier, conformist, anti-corruption layer
-- **Description** — what the relationship entails and why it exists
-- **Mermaid diagram** — a `flowchart LR` visual representation of the context map
+```
+| Upstream Context | Downstream Context | Relationship Type | Description | Source |
+|------------------|--------------------|-------------------|-------------|--------|
+| … | … | e.g. customer-supplier | … | transcript file path(s) |
+```
+
+Relationship types include: upstream/downstream, shared kernel, customer-supplier, conformist, anti-corruption layer.
+
+#### 4.2 Context Map Diagram
+
+A `flowchart LR` Mermaid diagram visualising the context map. Use one `subgraph` per bounded context from Section 2. For example:
+
+````
+```mermaid
+flowchart LR
+  subgraph ContextA["Context A"]
+    a1[Component]
+  end
+  subgraph ContextB["Context B"]
+    b1[Component]
+  end
+  ContextA -->|relationship type| ContextB
+```
+````
+
+### 5. Actors and Stakeholders
+
+Domain-level stakeholder roles evidenced in transcripts. Only include human and organisational roles mentioned by interviewees — code-defined user roles and system actors belong to the application-developer analysis.
+
+```
+| Actor / Stakeholder | Role Description | Source |
+|---------------------|------------------|--------|
+| … | … | transcript file path(s) |
+```
+
+### 6. Domain Rules and Invariants
+
+Business-level rules stated by interviewees as domain knowledge. Assign each rule a sequential `DR-xxx` identifier. Only include rules evidenced in transcripts as domain knowledge — code-enforced validation belongs to the application-developer analysis; database constraints belong to the database-analyst analysis.
+
+```
+| ID | Rule | Description | Source |
+|------|------|-------------|--------|
+| DR-001 | … | … | transcript file path(s) |
+```
 
 ## Output guidance
 
@@ -137,4 +197,4 @@ Relationships between bounded contexts, including:
 - Use consistent markdown structure (headings, bullet lists, file path citations).
 - Do not speculate. If the transcripts do not contain enough information to determine a pattern, say so rather than guessing.
 
-**Do not include:** Application workflows, page flows, UI screen analysis, or user journey documentation — these are the responsibility of the interaction-analyst agent. Source code analysis, code-level business rules, or technical implementation details — these are the responsibility of the application-developer agent. SQL schema, stored procedures, or database constraints — these are the responsibility of the database-analyst agent.
+**Do not include:** Application workflows, page flows, UI screen analysis, or user journey documentation — these are the responsibility of the interaction-analyst agent. Source code analysis, code-enforced validation rules, code-defined user roles, system actors, or technical implementation details — these are the responsibility of the application-developer agent. SQL schema, stored procedures, or database-level business rules and constraints — these are the responsibility of the database-analyst agent.
