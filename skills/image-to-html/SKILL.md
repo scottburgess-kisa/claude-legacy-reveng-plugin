@@ -1,12 +1,12 @@
 ---
 name: image-to-html
-description: Converts a UI screenshot of a legacy application into semantic, unstyled HTML. Use this when you need to extract the information structure from a screenshot so downstream agents can reason about the UI without expensive image tokens.
+description: Converts a UI screenshot of a legacy application into semantic, unstyled mockup HTML. Use this when you need to extract the information structure from a screenshot so downstream agents can reason about the UI without expensive image tokens.
 user-invocable: true
 allowed-tools: Read, Write, Bash(mkdir*)
 argument-hint: [image-path]
 ---
 
-You are converting a legacy application screenshot into semantic HTML.
+You are converting a legacy application screenshot into semantic, unstyled mockup HTML.
 
 ## Input
 
@@ -35,6 +35,6 @@ The image file path is: `$ARGUMENTS`
 
 5. **Ensure the output directory exists** by running `mkdir -p` on the parent directory of the output path.
 
-6. **Write the HTML file** to the derived output path using the Write tool.
+6. **Write the HTML mockup** to the derived output path using the Write tool.
 
 7. **Return a single line** confirming the output: `Wrote <output-path>`

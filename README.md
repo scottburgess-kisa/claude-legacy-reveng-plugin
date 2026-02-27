@@ -70,10 +70,10 @@ Place your raw material in the host project (the project you run the plugin from
 
 | Path | Produced by | Description |
 |------|------------|-------------|
-| `html/*.html` | `image-to-html` | Semantic HTML representation of each screenshot |
+| `html/*.html` | `image-to-html` | Semantic HTML mockup of each screenshot |
 | `transcripts/*_curated.txt` | `curate-transcript` | Interview transcripts with off-topic content removed (intermediate) |
-| `output/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from curated transcripts and HTML screens |
-| `output/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML screens and curated transcripts |
+| `output/domain-analysis.md` | `business-analyst` | Comprehensive domain analysis (ubiquitous language, bounded contexts, subdomains, context map) extracted from curated transcripts and HTML mockups |
+| `output/interaction-analysis.md` | `interaction-analyst` | Comprehensive interaction analysis (screen inventory, user workflows with mermaid diagrams, screen navigation map) stitched from HTML mockups and curated transcripts |
 | `output/application-analysis.md` | `application-developer` | Comprehensive application analysis (workflows, behaviours, domain model, business rules, reports) extracted from source code |
 | `output/database-analysis.md` | `database-analyst` | Comprehensive database analysis (schema, stored procedures, triggers, constraints, database-level business rules) extracted from SQL and source code |
 | `output/PRD.md` | `product-manager` | Comprehensive Product Requirements Document synthesised from all analysis outputs |
@@ -98,7 +98,7 @@ transcripts/*_curated.txt
 
 | Skill | Description |
 |-------|-------------|
-| `image-to-html` | Converts a legacy UI screenshot into semantic HTML |
+| `image-to-html` | Converts a legacy UI screenshot into semantic, unstyled mockup HTML |
 | `curate-transcript` | Removes off-topic content from interview transcripts |
 | `validate-mermaid` | Validates all Mermaid diagram blocks in a markdown file and fixes broken diagrams in place |
 
@@ -106,9 +106,9 @@ transcripts/*_curated.txt
 
 | Agent | Description |
 |-------|-------------|
-| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML, curated transcripts) |
-| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from curated transcripts and HTML screens for PRD generation |
-| `interaction-analyst` | Stitches HTML screen representations with curated interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
+| `digital-content-curator` | Prepares raw screenshots and interview transcripts into structured, analysis-ready outputs (HTML mockups, curated transcripts) |
+| `business-analyst` | Extracts strategic DDD patterns (ubiquitous language, bounded contexts, subdomains, context map) from curated transcripts and HTML mockups for PRD generation |
+| `interaction-analyst` | Stitches HTML mockups with curated interview transcripts to produce comprehensive interaction analysis (screen inventory, user workflows, screen navigation map) for PRD generation |
 | `application-developer` | Comprehensively reads legacy .NET source code under `src/` to extract workflows, behaviours, domain model, business rules, and reports for PRD generation |
 | `database-analyst` | Comprehensively reads legacy SQL Server database code under `src/` to extract schema, stored procedures, triggers, constraints, and database-level business rules for PRD generation |
 | `product-manager` | Synthesises all analysis outputs (domain, interaction, codebase, database) into a comprehensive Product Requirements Document for implementation planning. Requires curated content as a prerequisite |

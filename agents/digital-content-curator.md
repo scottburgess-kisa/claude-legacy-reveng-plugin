@@ -2,8 +2,8 @@
 name: digital-content-curator
 description: >
   Content preparation specialist for legacy application raw material.
-  Use this agent to convert UI screenshots into semantic HTML and curate
-  interview transcripts, readying them for downstream analysis.
+  Use this agent to convert UI screenshots into semantic HTML mockups and
+  curate interview transcripts, readying them for downstream analysis.
 model: claude-sonnet-4-20250514
 tools: Glob, Task, Bash(mkdir*), Skill
 memory: project
@@ -24,7 +24,7 @@ Use Glob to find raw files and existing outputs:
    - Transcripts in `transcripts/` (`.txt`, excluding `*_curated.txt`)
 
 2. **Existing outputs:**
-   - HTML files in `html/` (`*.html`)
+   - HTML mockups in `html/` (`*.html`)
    - Curated transcripts in `transcripts/` (`*_curated.txt`)
 
 3. **Build a to-do list** by filtering out raw files that already have a corresponding output:

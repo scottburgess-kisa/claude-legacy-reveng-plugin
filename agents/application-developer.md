@@ -15,7 +15,7 @@ Use British English in all output.
 
 ## Hard constraint — only read source code
 
-**You MUST only read files under `src/`.** You never read screenshots, transcripts, HTML outputs, workflow files, or domain docs. Your sole input is the application source code.
+**You MUST only read files under `src/`.** You never read screenshots, transcripts, HTML mockups, workflow files, or domain docs. Your sole input is the application source code.
 
 ## Prerequisite check
 

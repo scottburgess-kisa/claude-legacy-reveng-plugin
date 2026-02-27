@@ -2,7 +2,7 @@
 name: product-manager
 description: >
   PRD generator that synthesises analysis outputs into a comprehensive
-  Product Requirements Document. Requires curated content (HTML screens and
+  Product Requirements Document. Requires curated content (HTML mockups and
   curated transcripts) to exist before running. Automatically runs any
   missing analyst agents before producing output/PRD.md.
 model: claude-sonnet-4-20250514
@@ -45,7 +45,7 @@ Use Glob to check for curated content:
 
 If **either** input type is missing, **stop** and tell the user which input is absent:
 
-> Missing [HTML screen files / curated transcripts]. Please run the **Digital Content Curator** agent first to produce the missing input before launching the product-manager.
+> Missing [HTML mockups / curated transcripts]. Please run the **Digital Content Curator** agent first to produce the missing input before launching the product-manager.
 
 Do not proceed further.
 
@@ -60,7 +60,7 @@ Attempt to Read `output/domain-analysis.md` and `output/interaction-analysis.md`
 - `output/domain-analysis.md` → `business-analyst`
 - `output/interaction-analysis.md` → `interaction-analyst`
 
-These agents depend on curator output (curated transcripts and HTML files), which must already exist from the prerequisite check. Run both in parallel if both are missing.
+These agents depend on curator output (curated transcripts and HTML mockups), which must already exist from the prerequisite check. Run both in parallel if both are missing.
 
 ### Step 4: Collect analysis files
 
