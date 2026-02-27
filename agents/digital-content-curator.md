@@ -35,7 +35,7 @@ Only files without outputs proceed to Phases B and C. If all files of a given ty
 
 ### Phase B — Process screenshots
 
-For each screenshot, launch a Task subagent (to keep images out of your context). Launch all screenshot subagents in parallel in a single response. Each skill takes a single argument: the file path. Do not pass any other text in the argument.
+For each screenshot, launch a Task subagent (to keep images out of your context). Process screenshots **one at a time** — launch one subagent, wait for it to return, then launch the next. Each skill takes a single argument: the file path. Do not pass any other text in the argument.
 
 ```
 Task(
@@ -44,11 +44,11 @@ Task(
 )
 ```
 
-Wait for all screenshot subagents to return before continuing.
+Do not move to Phase C until **every** screenshot has been processed.
 
 ### Phase C — Process transcripts
 
-For each transcript, launch a Task subagent (to isolate the skill from your context). Launch all transcript subagents in parallel in a single response. Each skill takes a single argument: the file path. Do not pass any other text in the argument.
+For each transcript, launch a Task subagent (to isolate the skill from your context). Process transcripts **one at a time** — launch one subagent, wait for it to return, then launch the next. Each skill takes a single argument: the file path. Do not pass any other text in the argument.
 
 ```
 Task(
@@ -57,7 +57,7 @@ Task(
 )
 ```
 
-Wait for all transcript subagents to return before continuing.
+Do not move to Phase D until **every** transcript has been processed.
 
 ### Phase D — Verify all outputs exist
 
