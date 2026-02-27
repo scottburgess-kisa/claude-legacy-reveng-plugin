@@ -149,7 +149,7 @@ graph LR
 
 ## Pipeline
 
-The pipeline runs in stages from raw inputs to a finished PRD. Stage 0 (content curation) is run manually before launching the `product-manager`, which orchestrates the remaining stages. In the diagram below, rectangles are agents, hexagons are skills, stadium shapes are files, and the dashed border marks the manual stage.
+The pipeline has two independent phases. Content curation is a manual prerequisite — run it first using the `digital-content-curator` agent or the bash script (see Troubleshooting). Once curated content exists, the `product-manager` orchestrates the analysis and synthesis stages. In the diagram below, rectangles are agents, hexagons are skills, stadium shapes are files, and the dashed border marks the manual phase.
 
 ```mermaid
 flowchart TB
@@ -157,46 +157,45 @@ flowchart TB
     transcripts(["transcripts/"])
     src(["src/"])
 
-    subgraph stage0 ["Stage 0 - manual"]
-        curator[digital-content-curator]
+    subgraph curation ["Content curation — manual prerequisite"]
         i2h{{image-to-html}}
         ct{{curate-transcript}}
         html(["html/*.html"])
         curated(["*_curated.txt"])
 
-        curator -->|per screenshot| i2h
-        curator -->|per transcript| ct
         i2h --> html
         ct --> curated
     end
-    style stage0 stroke-dasharray: 5 5
+    style curation stroke-dasharray: 5 5
 
-    screenshots --> curator
-    transcripts --> curator
+    screenshots --> i2h
+    transcripts --> ct
 
-    appdev[application-developer]
-    dbanalyst[database-analyst]
+    subgraph pm_pipeline ["product-manager pipeline"]
+        appdev[application-developer]
+        dbanalyst[database-analyst]
+        ba[business-analyst]
+        ia[interaction-analyst]
+        PM[product-manager]
+
+        appdev --> application(["output/application-analysis.md"])
+        dbanalyst --> database(["output/database-analysis.md"])
+        ba --> domain(["output/domain-analysis.md"])
+        ia --> interaction(["output/interaction-analysis.md"])
+
+        application & database & domain & interaction --> PM
+        PM --> PRD(["output/PRD.md"])
+    end
+
     src --> appdev & dbanalyst
-
-    ba[business-analyst]
-    ia[interaction-analyst]
     html & curated --> ba & ia
-
-    ba --> domain(["output/domain-analysis.md"])
-    ia --> interaction(["output/interaction-analysis.md"])
-    appdev --> application(["output/application-analysis.md"])
-    dbanalyst --> database(["output/database-analysis.md"])
-
-    PM[product-manager]
-    domain & interaction & application & database --> PM
-    PM --> PRD(["output/PRD.md"])
 ```
 
 | Stage | Components | Runs in parallel with |
 |-------|------------|-----------------------|
-| 0 — Content preparation (manual) | `digital-content-curator` invokes `image-to-html` and `curate-transcript` | Run before launching `product-manager` |
+| Prerequisite — Content curation (manual) | `image-to-html` and `curate-transcript` skills | Run before launching `product-manager` |
 | 1 — Code analysis | `application-developer` and `database-analyst` read `src/` independently | Stage 2 |
-| 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Stage 1; depends on Stage 0 |
+| 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curated outputs | Stage 1 |
 | 3 — Synthesis | `product-manager` reads all four analyses and writes `output/PRD.md` | None; depends on Stages 1 and 2 |
 
 ## Troubleshooting
