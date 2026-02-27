@@ -165,6 +165,44 @@ flowchart TB
 | 2 — Content analysis | `business-analyst` and `interaction-analyst` consume curator outputs | Stage 1; depends on Stage 0 |
 | 3 — Synthesis | `product-manager` reads all four analyses and writes `output/PRD.md` | None; depends on Stages 1 and 2 |
 
+## Troubleshooting
+
+### Content curation stalls on large file sets
+
+The `digital-content-curator` agent processes files sequentially within a single Claude session. When the number of screenshots or transcripts is large (e.g. 50+), the session may exhaust its turn budget before finishing all files.
+
+If this happens, bypass the agent and invoke the skills directly from a bash loop. Each iteration runs its own Claude process with a fresh context window, so there is no turn budget limit:
+
+```bash
+#!/usr/bin/env bash
+CLAUDE="claude --plugin-dir /path/to/claude-legacy-reveng-plugin --model claude-sonnet-4-20250514 --dangerously-skip-permissions"
+
+# Process screenshots
+for img in screenshots/*.{png,jpg,jpeg,gif,bmp,webp}; do
+  [ -f "$img" ] || continue
+  name="${img##*/}"
+  name="${name%.*}"
+  [ -f "html/${name}.html" ] && echo "Skipping $img (already done)" && continue
+  echo "Processing $img..."
+  $CLAUDE -p "/image-to-html $img" \
+    --allowedTools "Read,Write,Bash(mkdir*)"
+done
+
+# Process transcripts
+for txt in transcripts/*.txt; do
+  [ -f "$txt" ] || continue
+  [[ "$txt" == *_curated.txt ]] && continue
+  name="${txt##*/}"
+  name="${name%.txt}"
+  [ -f "transcripts/${name}_curated.txt" ] && echo "Skipping $txt (already done)" && continue
+  echo "Processing $txt..."
+  $CLAUDE -p "/curate-transcript $txt" \
+    --allowedTools "Read,Edit,Bash(mkdir*;cp*)"
+done
+```
+
+The skip logic makes this resumable — re-run the script and it picks up where it left off.
+
 ## Status
 
 Early development.
