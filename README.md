@@ -94,6 +94,40 @@ html/
 transcripts/*_curated.txt
 ```
 
+## Component Map
+
+Rectangles are agents, hexagons are skills. Arrows show invocation relationships.
+
+```mermaid
+graph LR
+    subgraph Skills
+        i2h{{image-to-html}}
+        ct{{curate-transcript}}
+        vm{{validate-mermaid}}
+    end
+
+    subgraph Agents
+        curator[digital-content-curator]
+        ba[business-analyst]
+        ia[interaction-analyst]
+        ad[application-developer]
+        da[database-analyst]
+        pm[product-manager]
+    end
+
+    curator -->|invokes| i2h
+    curator -->|invokes| ct
+
+    pm -->|orchestrates| ba
+    pm -->|orchestrates| ia
+    pm -->|orchestrates| ad
+    pm -->|orchestrates| da
+
+    ba -->|invokes| vm
+    ia -->|invokes| vm
+    pm -->|invokes| vm
+```
+
 ## Skills
 
 | Skill | Description |
