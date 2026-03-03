@@ -6,6 +6,12 @@ A Claude Code plugin for Defra's Legacy Application Programme (LAP) to aid in th
 
 This plugin extends Claude Code with specialised tooling and prompts to assist engineers in understanding, documenting, and modernising legacy systems within Defra's estate.
 
+## Data Classification
+
+**This plugin must only be used on source material classified as OFFICIAL.** Do not use it with material at any higher classification. If you are unsure about the classification of your source material, seek guidance from your organisation before proceeding.
+
+By default, Claude Code sends data to models hosted by Anthropic. Claude Code can also be configured to use [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/) or [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai) — consult your organisation's guidance on approved platforms.
+
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
