@@ -12,6 +12,12 @@ This plugin extends Claude Code with specialised tooling and prompts to assist e
 
 By default, Claude Code sends data to models hosted by Anthropic. Claude Code can also be configured to use [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/) or [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai) — consult your organisation's guidance on approved platforms.
 
+## Permissions
+
+Claude Code prompts for approval before executing tools such as shell commands and file writes. The `--dangerously-skip-permissions` flag bypasses these prompts, allowing fully unattended operation (e.g. in the batch curation script below).
+
+If you use this flag, run Claude Code inside a containerised sandbox (Docker, Podman, or a [devcontainer](https://code.claude.com/docs/en/devcontainer)) so that any unintended actions are contained. If a sandbox is not available, omit the flag and approve each action manually instead.
+
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
